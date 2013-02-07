@@ -27,7 +27,7 @@ void Eagle::TimeTab(){
 	if (XSpeed < -1) {
 		YSpeed = (YSpeed + 2.1 / -(XSpeed - 2) - 0.1) / 1.1;
 		XSpeed = XSpeed / 1.05;
-	}else{if (XSpeed > 1) {
+	}else if (XSpeed > 1) {
 		YSpeed = (YSpeed + 2.1 / (XSpeed + 2) - 0.1) / 1.1;
 		XSpeed = XSpeed / 1.05;
 	}else{
@@ -147,8 +147,8 @@ void Eagle::TimeTab(){
 		WheelY = 5;
 		i = FrmScreen.isPlayer(XPos, YPos, 30, 30);
 		if (i != 0) {
-			if (FrmScreen.getPlayer(i - 1)->isGuy()) {
-				Guy* guy = (Guy*)FrmScreen.getPlayer(i - 1);
+			if ( FrmScreen.getPlayer(i - 1)->isGuy()) {
+				auto guy = (Guy*) FrmScreen.getPlayer(i - 1);
 				guy->EW (this);
 				UpDateItems();
 			}
@@ -168,11 +168,10 @@ void Eagle::TimeTab(){
 		}
 	}
 }
-}
 
 void Eagle::Render(){
 	FrmScreen.DrawPlPic(ddWheel, XPos - 6, YPos + CWheelY - 12, (WheelRotate));
-	FrmScreen.DrawPlPic(ddEagle, XPos - 15, YPos - 12, 0.5 + TurnIT / 2);
+	FrmScreen.DrawPlPic(ddEagle, XPos - 15, YPos - 12, 0.5 + (double)TurnIT / 2);
 }
 
 void Eagle::Init(double X, double Y, double XSpeed2, double YSpeed2, int Number){
@@ -182,8 +181,10 @@ void Eagle::Init(double X, double Y, double XSpeed2, double YSpeed2, int Number)
 	YPos = Y;
 	XSpeed = XSpeed2;
 	YSpeed = YSpeed2;
+	CWheelY = 0;
 	Width = 22 / 2;
 	Height = 12 / 2;
+	Dying = false;
 	Items[0] = GamePlay.Armor;
 	ItemMax[0] = GamePlay.Armor;
 	FrmScreen.SetStatus((MyNumber), 0, 1);
@@ -230,6 +231,7 @@ void Eagle::Die(){
 void Eagle::Terminate(){
 	FrmScreen.RemoveObject(this);
 	FrmScreen.KilledPlayer(MyNumber);
+	if (MyNumber < 2) { FrmScreen.MakePlayers (MyNumber);}
 	long i;
 	for(i = 0; i <= 10; ++i){
 		auto nSpark = new Spark;
@@ -237,7 +239,6 @@ void Eagle::Terminate(){
 		FrmScreen.AddObject(nSpark);
 	}
 	FrmScreen.HugeExplosion(XPos, YPos, 90, 50);
-	if (MyNumber < 2) { FrmScreen.MakePlayers (MyNumber);}
 	PlaySound(dsExplosion);
 	FrmScreen.MakeQuake(50);
 }

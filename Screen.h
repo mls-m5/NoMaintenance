@@ -49,6 +49,8 @@ private:
 
 	SDL_Surface *screen;
 
+	int CurrentlyRendering;
+
 	void setControlStateFromKey(int e, int i);
 	void Render();
 
@@ -136,9 +138,9 @@ public:
 			int picNum, double x, double y, int RotateNum = 0) ;
 
 
-	int GetMapWidth() ;
+	int GetMapWidth() {return MapWidth;}
 
-	int GetMapHeight();
+	int GetMapHeight() {return MapHeight;}
 
 	void DrawPlLine(double xPos, double yPos,
 			double x2, double y2, double width, Color c);
@@ -149,6 +151,12 @@ public:
 	ControlStruct GetControll(int num) ;
 
 	void SetStatus(long myNumber, long index, double value) ;
+	void SetStatus(long number, long index, long Value, long ValueMax){
+		if (ValueMax)
+			SetStatus(number, index, (double)Value / (double)ValueMax);
+		else
+			SetStatus(number, index, 0.);
+	}
 
 	void MakePlayers(int myNumber) ;
 
@@ -158,8 +166,6 @@ public:
 			double ninjaPosY) ;
 
 	void SetPlayer(int Index, Player * p) ;
-
-
 };
 
 #endif /* SCREEN_H_ */

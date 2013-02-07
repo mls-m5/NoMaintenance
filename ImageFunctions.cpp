@@ -565,6 +565,7 @@ Color::Color(unsigned int c) {
 }
 
 void ImageFunctions::DrawCircle(double X, double Y, double r, Color c, double Alpha) {
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glColor4d(Alpha,c.r, c.g, c.b);
 	glBegin(GL_TRIANGLE_FAN);
 	for (int i= 0; i < 360; ++i){

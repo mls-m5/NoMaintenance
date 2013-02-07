@@ -20,7 +20,8 @@ Exp::~Exp() {
 void Exp::Init(double X, double Y, long nSize){
 	XPos = X;
 	YPos = Y;
-	i = (int) (3 - 3 * nSize);
+	//i = (int) (3 - 3 * nSize);
+	i = 0;
 	Size = 7;
 }
 

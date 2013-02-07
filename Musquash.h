@@ -25,7 +25,7 @@ public:
 //	double XSpeed; double YSpeed; double XPos; double YPos;
 //	int Width; int Height;
 
-	int CWheelY[2];
+	int CWheelY[2]; int WheelY;
 	double WheelRotate;
 	bool OnGround;
 	int TurnIT; double Aim; double XAim; double CAim;

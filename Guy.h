@@ -35,7 +35,7 @@ public:
 	double getYPos() ;
 
 
-	void Damage(int damage) ;
+	void Damage(long damage) ;
 
 
 	double getWidth() ;
@@ -59,12 +59,10 @@ public:
 	void UpDateItems();
 
 	int MyNumber; long PictureNumber;
-	float XSpeed; float YSpeed; double XPos; double YPos;
 	long Items[8], ItemMax[8];
 	long WheelY;
 	long GuyStep; bool OnGround; int TurnIT; long Aim; long XAim;
 	WeaponCollection Weapons;
-	int Width; int Height;
 	bool Dying;
 	bool CrossVar;
 

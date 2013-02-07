@@ -133,7 +133,7 @@ void Musquash::TimeTab(){
 		}else{
 			Weapons.GetCurrentWeapon()->Fire( (XPos), (YPos) - 7, XAim, Aim, (TurnIT), false);
 		}
-		if (c.Reload != 0 && c.Jump != 0) { NinjaOut = true;}
+		if (c.Reload != 0 && c.Jump != 0) { NinjaOut = false;}
 		if (c.Reload != 0) {
 			if (c.AimDirection == -1) {
 				if (NinjaLength > .2) { NinjaLength = NinjaLength - 0.1;}
@@ -168,9 +168,8 @@ void Musquash::TimeTab(){
 		WheelY = 5;
 		i = FrmScreen.isPlayer(XPos, YPos, 30, 30);
 		if (i != 0) {
-			Guy *guy;
 			if ( FrmScreen.getPlayer(i - 1)->isGuy()) {
-				guy = (Guy*) FrmScreen.getPlayer(i - 1);
+				auto guy = (Guy*) FrmScreen.getPlayer(i - 1);
 				guy->EW (this);
 				UpDateItems();
 			}
@@ -189,6 +188,12 @@ void Musquash::Init(double X, double Y, double XSpeed2, double YSpeed2, int Numb
 	int i;
 
 	MyNumber = Number;
+	if (Number == 1){
+		Target = 0;
+	}
+	else{
+		Target = 1;
+	}
 	XAim = 50;
 	CAim = 0;
 	Aim = 0;
@@ -221,18 +226,17 @@ void Musquash::WheelCalculate(double Val){
 	do{
 		if (WheelRotate < 0) {
 			WheelRotate = WheelRotate + 7;
-		}else{if (WheelRotate > 7) {
+		}else if (WheelRotate > 7) {
 			WheelRotate = WheelRotate - 7;
 		}else{
 			return;
-		}
-
 		}
 	}while(true);
 }
 
 Musquash::Musquash() {
 	TurnIT = -1;
+	Dying = false;
 	Weapons.Init(this);
 	Weapons.AddWeapon("kanonare");
 	Weapons.AddWeapon("Klachnikow");

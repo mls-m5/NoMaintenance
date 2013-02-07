@@ -16,7 +16,7 @@ class Player: public Solid {
 
 protected:
 	int Items[8];
-	int ItemMax[8]; int WheelY;
+	int ItemMax[8];//
 public:
 	double XPos, YPos, XSpeed, YSpeed, Width, Height;
 	virtual void Damage(long x){} ;
@@ -42,8 +42,6 @@ public:
 	virtual void PickUp(std::string Item){} ;
 
 	virtual void UpDateItems(){} ;
-
-	virtual void DoNinjarope(){} ;
 
 	double getXPos() {return XPos;};
 

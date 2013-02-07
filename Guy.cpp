@@ -42,99 +42,99 @@ void Guy::TimeTab(){
 				}
 			}
 		}
-		if (FrmScreen.GetMap((XPos), YPos + 6) > mWater) {
-			OnGround = 1;
-		}
-		if (FrmScreen.GetMap((XPos), YPos - 15) > mWater) {
-			if (YSpeed < 0) {
-				YPos = YPos - YSpeed;
-				YSpeed = -YSpeed;
-			}
-		}
-		;
-		if (FrmScreen.GetMap(XPos + 3, YPos) > mWater && XSpeed > 0) {
-			if (XSpeed > 0) {
-				for(i = 0; i <= 5; ++i){
-					if (FrmScreen.GetMap(XPos + 3, YPos - i) > mWater) {
-						YPos = YPos - i;
-						break;
-					}
-				}
-			}
-		}
-		if (FrmScreen.GetMap(XPos - 3, YPos) > mWater && XSpeed > 0) {
-			if (XSpeed > 0) {
-				for(i = 0; i <= 5; ++i){
-					if (FrmScreen.GetMap(XPos + 3, YPos - i) > mWater) {
-						YPos = YPos - i;
-						break;
-					}
-				}
-			}
-		}
-		if (FrmScreen.GetMap(XPos - 2, YPos - 2) > mWater && XSpeed < 0) {
-			if (XSpeed < 0) {
-				XPos = XPos - XSpeed;
-				XSpeed = -XSpeed;
-			}
-		}
-		if (FrmScreen.GetMap(XPos + 2, YPos - 2) > mWater && XSpeed > 0) {
-			if (XSpeed > 0) {
-				XPos = XPos - XSpeed;
-				XSpeed = -XSpeed;
-			}
-		}
-		if (MyNumber < 2) {
-			FrmScreen.SetScreenPos( (MyNumber), (XPos), (YPos));
-			auto c = FrmScreen.GetControll((MyNumber));
-			WheelY = 5 + int(c.Jump) * 10;
-			if (OnGround) {
-				XSpeed = 3 * c.MoveDirection;
-			}else{
-				XSpeed = XSpeed + c.MoveDirection * 0.5;
-			}
-			if (! OnGround) {
-				GuyStep = 2;
-				XSpeed = XSpeed / 1.1;
-			}
-			else if (XSpeed) {
-				if (GuyStep < 0) { GuyStep = 4;}
-				GuyStep = GuyStep - 1;
-			}
-			if (c.MoveDirection) { TurnIT = c.MoveDirection;}
-			Weapons.GetCurrentWeapon()->Fire( (XPos), (YPos), XAim, Aim, (TurnIT), c.Fire);
-			Aim = Aim + c.AimDirection * 4;
-			if (c.AimDirection) {
-				if (Aim > 30) { Aim = 30;}
-				if (Aim < -50) { Aim = -50;}
-				XAim = pow((2500 - Aim * Aim) , 0.5);
-			}
-			CrossVar = ! CrossVar;
-			FrmScreen.DrawOnePlPic (MyNumber, ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 2);
-			if (c.Change) {
-				if (c.AimDirection == -1) {
-					Weapons.SetNextWeapon();
-				}else{if (c.AimDirection == 1) { Weapons.SetNextWeapon();}
-				}
-			}
-			if (c.Jump && OnGround) { YSpeed = -10;}
-			;
-			frmScreen.SetStatus((MyNumber), 0, Items[0] / ItemMax[0]);
-		}
-		else{
-			WheelY = 5;
-		}
-		;
-		;
-		;
-		CalcItem(1, 20);
 	}
+	if (FrmScreen.GetMap((XPos), YPos + 6) > mWater) {
+		OnGround = 1;
+	}
+	if (FrmScreen.GetMap((XPos), YPos - 15) > mWater) {
+		if (YSpeed < 0) {
+			YPos = YPos - YSpeed;
+			YSpeed = -YSpeed;
+		}
+	}
+	;
+	if (FrmScreen.GetMap(XPos + 3, YPos) > mWater && XSpeed > 0) {
+		if (XSpeed > 0) {
+			for(i = 0; i <= 5; ++i){
+				if (FrmScreen.GetMap(XPos + 3, YPos - i) > mWater) {
+					YPos = YPos - i;
+					break;
+				}
+			}
+		}
+	}
+	if (FrmScreen.GetMap(XPos - 3, YPos) > mWater && XSpeed > 0) {
+		if (XSpeed > 0) {
+			for(i = 0; i <= 5; ++i){
+				if (FrmScreen.GetMap(XPos + 3, YPos - i) > mWater) {
+					YPos = YPos - i;
+					break;
+				}
+			}
+		}
+	}
+	if (FrmScreen.GetMap(XPos - 2, YPos - 2) > mWater && XSpeed < 0) {
+		if (XSpeed < 0) {
+			XPos = XPos - XSpeed;
+			XSpeed = -XSpeed;
+		}
+	}
+	if (FrmScreen.GetMap(XPos + 2, YPos - 2) > mWater && XSpeed > 0) {
+		if (XSpeed > 0) {
+			XPos = XPos - XSpeed;
+			XSpeed = -XSpeed;
+		}
+	}
+	if (MyNumber < 2) {
+		FrmScreen.SetScreenPos( (MyNumber), (XPos), (YPos));
+		auto c = FrmScreen.GetControll((MyNumber));
+		WheelY = 5 + int(c.Jump) * 10;
+		if (OnGround) {
+			XSpeed = 3 * c.MoveDirection;
+		}else{
+			XSpeed = XSpeed + c.MoveDirection * 0.5;
+		}
+		if (! OnGround) {
+			GuyStep = 2;
+			XSpeed = XSpeed / 1.1;
+		}
+		else if (XSpeed) {
+			if (GuyStep < 0) { GuyStep = 4;}
+			GuyStep = GuyStep - 1;
+		}
+		if (c.MoveDirection) { TurnIT = c.MoveDirection;}
+		Weapons.GetCurrentWeapon()->Fire( (XPos), (YPos), XAim, Aim, (TurnIT), c.Fire);
+		Aim = Aim + c.AimDirection * 4;
+		if (c.AimDirection) {
+			if (Aim > 30) { Aim = 30;}
+			if (Aim < -50) { Aim = -50;}
+			XAim = pow((2500 - Aim * Aim) , 0.5);
+		}
+		CrossVar = ! CrossVar;
+		if (c.Change) {
+			if (c.AimDirection == -1) {
+				Weapons.SetNextWeapon();
+			}else{if (c.AimDirection == 1) { Weapons.SetNextWeapon();}
+			}
+		}
+		if (c.Jump && OnGround) { YSpeed = -10;}
+		;
+		frmScreen.SetStatus((MyNumber), 0, Items[0] / ItemMax[0]);
+	}
+	else{
+		WheelY = 5;
+	}
+	;
+	;
+	;
+	CalcItem(1, 20);
 
 
 }
 
 void Guy::Render(){
 
+	FrmScreen.DrawOnePlPic (MyNumber, ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 2);
 	FrmScreen.DrawPlPic(ddGuy, XPos - 5, YPos - 7.5, 4.5 + TurnIT * (GuyStep + 1.5) + 10 * PictureNumber);
 }
 
@@ -146,11 +146,13 @@ void Guy::Init(double X, double Y,  double XSpeed2,  double YSpeed2, int Number)
 	YPos = Y;
 	XSpeed = XSpeed2;
 	YSpeed = YSpeed2;
+	Dying = false;
 	Width = 10 / 2;
 	Height = 22 / 2;
 	Items[0] = 0.4 * GamePlay.Armor + 1;
 	ItemMax[0] = 0.4 * GamePlay.Armor + 1;
 	FrmScreen.SetStatus((MyNumber), 0, 1);
+	FrmScreen.SetPlayer(MyNumber, this);
 	for(i = 1; i <= 7; ++i){
 		Items[i] = 2 * GamePlay.Ammo;
 		ItemMax[i] = 2 * GamePlay.Ammo;
@@ -159,7 +161,7 @@ void Guy::Init(double X, double Y,  double XSpeed2,  double YSpeed2, int Number)
 	UpDateItems();
 }
 
-void Guy::Damage(int Val){
+void Guy::Damage(long Val){
 	if (Dying) { return;;}
 	long i;
 	for(i = 0; i <= 9  * GamePlay.Blood / 100; ++i){

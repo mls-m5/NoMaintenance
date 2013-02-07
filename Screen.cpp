@@ -24,6 +24,10 @@
 #include "Eagle.h"
 #include "Guy.h"
 #include "CExp.h"
+#include "Reference.h"
+#include "Airokurtz.h"
+#include "Hao.h"
+#include "Box.h"
 
 Screen frmScreen;
 
@@ -53,6 +57,12 @@ void Screen::Start(){
 
 	while (gameRunning)
 	{
+
+		DropBoxLeft = DropBoxLeft - 1;
+		if (DropBoxLeft < 1) {
+			DropBox();
+			DropBoxLeft = 300;
+		}
 
 		if (PollEvents())
 		{
@@ -187,7 +197,7 @@ void Screen::SetScreenSize(int w, int h){
 }
 
 void Screen::InitFrmScreen() {
-	SetScreenSize(1024, 480 * 2);
+	SetScreenSize(1200, 800);
 	SDL_Init( SDL_INIT_AUDIO | SDL_OPENGL);
 	screen = SDL_SetVideoMode( SCREENPLWIDTH * 2, SCREENPLHEIGHT, 0,
 			SDL_GL_DOUBLEBUFFER | SDL_OPENGL);
@@ -203,16 +213,22 @@ void Screen::InitFrmScreen() {
 	LoadLevel("data/user/test");
 	PLAYERNUMBER = 2;
 
-	GamePlay.Ammo = 50;
+	GamePlay.Ammo = 100;
 	GamePlay.Armor = 50;
 	GamePlay.Blood = 100;
 	GamePlay.Veihles = 10;
+
+
+	for (int i = 0; i < 5; ++i){
+		DropBox();
+	}
+	DropBoxLeft = 0;
 
 	//
 	//	auto s = new Smoke();
 	//	s->Init(10, 10, 1, 1, 0);
 	//	AddObject(s);
-	MakeSmoke(10,10,0,1,0);
+	//	MakeSmoke(10,10,0,1,0);
 	//	MakeSmoke(40,10,0,1,0);
 	//	MakeSmoke(70,10,0,1,0);
 
@@ -240,12 +256,12 @@ void Screen::InitFrmScreen() {
 	//	AddObject(b3);
 	//
 	//	auto m = new Musquash();
-	auto e = new Eagle();
+	auto e = new Hao();
 	e->Init(30, 30, 0, 0,  1);
 	AddObject(e);
 	SetPlayer(1, e);
 
-	auto m = new Musquash();
+	auto m = new Airokurtz();
 	m->Init(40, 30, 0, 0, 0);
 	AddObject(m);
 	SetPlayer(0, m);
@@ -337,6 +353,7 @@ void Screen::Render() {
 
 
 	for (int i = 0; i < 2; ++i){
+		CurrentlyRendering = i;
 
 		ImageFunctions::SetViewport(i * SCREENPLWIDTH,0,SCREENPLWIDTH, SCREENPLHEIGHT);
 
@@ -355,6 +372,7 @@ void Screen::Render() {
 
 
 		DrawPlPic(ddRLevel, 0,0, 0);
+		DrawPlCircle(0,0,20,Color(1,1,1));
 
 		//Ritar display
 		glMatrixMode(GL_PROJECTION);
@@ -367,8 +385,9 @@ void Screen::Render() {
 
 
 		for (int j = 0; j < 8; ++j){
-			auto tx = -1. + (double) j / 8. ;
-			ImageFunctions::DrawLineToDisplay(tx,Status[i][j],tx,0,.01, Color(1,1,1));
+			auto tx = -.8 + (double) j / 8. ;
+			//			ImageFunctions::DrawLineToDisplay(tx,1./ 4. -1.,tx,-1.,.02, Color(0,0,0));
+			ImageFunctions::DrawLineToDisplay(tx,Status[i][j] / 4. -1.,tx,-1.,.01, Color(1,1,1));
 		}
 	}
 
@@ -451,10 +470,96 @@ void Screen::MakeQuake(long QuakeScale) {
 }
 
 void Screen::DropBox() {
-	// TODO Auto-generated method stub
+	long i; long X; long Y;
+	int i2;
+	i2 = Rnd() * 25;
+	auto box = new Box;
 
+	if (i2 <=  1){
+		box->Item = "kanonare";
+		box->BoxType = 1;
+	} else if (i2 <=  2){
+		box->Item = "m6ton";
+		box->BoxType = 1;
+	} else if (i2 <=  3){
+		box->Item = "floppydisk";
+		box->BoxType = 1;
+	} else if (i2 <=  5){
+		box->Item = "kraft";
+		box->BoxType = 3;
+	} else if (i2 <=  10){
+		auto in = (int)(1 + Rnd() * 6);
+		box->Item = "item nr " + in;
+		box->BoxType = 2;
+		box->ItemNumber = in;
+	} else if (i2 <=  11){
+		box->Item = "haubits";
+		box->BoxType = 1;
+	} else if (i2 <=  12){
+		box->Item = "akå10";
+		box->BoxType = 1;
+	} else if (i2 <=  13){
+		box->Item = "uschmalaba";
+		box->BoxType = 4;
+	} else if (i2 <=  14){
+		box->Item = "m7ton";
+		box->BoxType = 1;
+	} else if (i2 <=  15){
+		box->Item = "carlgustaf";
+		box->BoxType = 1;
+	} else if (i2 <=  16){
+		box->Item = "minuteman";
+		box->BoxType = 6;
+	} else if (i2 <=  17){
+		box->Item = "chokladzingo";
+		box->BoxType = 4;
+	} else if (i2 <=  18){
+		box->Item = "gåsgun";
+		box->BoxType = 0;
+	} else if (i2 <=  19){
+		box->Item = "armageddon";
+		box->BoxType = 5;
+	} else if (i2 <=  20){
+		box->Item = "zookaba";
+		box->BoxType = 1;
+	} else if (i2 <=  21){
+		box->Item = "multiblaster";
+		box->BoxType = 0;
+	} else if (i2 <=  22){
+		box->Item = "jolt";
+		box->BoxType = 0;
+	} else if (i2 <=  23){
+		box->Item = "nurb";
+		box->BoxType = 4;
+	} else if (i2 <=  24){
+		box->Item = "gaseel";
+		box->BoxType = 1;
+	} else if (i2 <=  25){
+		box->Item = "meangun";
+		box->BoxType = 0;
+	} else if (i2 <=  26){
+		box->Item = "miligun";
+		box->BoxType = 1;
+	} else if (i2 <=  27){
+		box->Item = "eldfunkar";
+		box->BoxType = 4;
+	} else if (i2 <=  28){
+		box->Item = "SpastOLW";
+		box->BoxType = 1;
+	}
+
+	AddTextToBuffer(0, "Har släppt " + box->Item);
+	AddTextToBuffer(1, "Har släppt " + box->Item);
+	for(i = 0; i <= 1000; ++i){
+		X = (MapWidth - 20) * Rnd() + 10;
+		Y = (MapHeight - 20) * Rnd() + 10;
+		if (GetMap(X, Y) == mAir) { break;}
+	}
+	box->Init(X, Y, 0, 0);
+	;
+	AddObject(box);
+	;
 }
-
 
 
 void Screen::HugeExplosion(double xpos, double ypos,  double Damage, double Power) {
@@ -483,31 +588,32 @@ void Screen::HugeExplosion(double xpos, double ypos,  double Damage, double Powe
 }
 void Screen::CustomExplosion(double x, double y, long Damage,
 		int Size, long Power) {
-		DrawCircleToMap(x, y, Size, mAir);
-		double playerAngle; double playerDistance; double NPower;
-		auto nExp = new CExp();
-		nExp->Init (x,y,Size);
-		AddObject(nExp);
+	DrawCircleToMap(x, y, Size, mAir);
+	double playerAngle; double playerDistance; double NPower;
+	auto nExp = new CExp();
+	nExp->Init (x,y,Size);
+	AddObject(nExp);
 
-		double dx, dy;
+	double dx, dy;
 
-		for (int i = 0; i < PLAYERNUMBER; ++i){
-			dx = player[i]->XPos - x;
-			dy = player[i]->YPos - y;
-			playerDistance = sqrt(dx * dx + dy * dy + player[i]->Width + player[i]->Height);
+	for (int i = 0; i < PLAYERNUMBER; ++i){
+		dx = player[i]->XPos - x;
+		dy = player[i]->YPos - y;
+		playerDistance = sqrt(dx * dx + dy * dy + player[i]->Width + player[i]->Height);
 
-			if (playerDistance < Size){
-				playerAngle = (double)GetRot(dx, dy, 6280) / 1000;
-				NPower = playerDistance / Size + 1;
-				player[i]->Force(sin(playerAngle) * Power / NPower,
-						cos(playerAngle) * Power / NPower);
-				player[i]->Damage((int) (Damage / NPower));
-			}
+		if (playerDistance < Size){
+			playerAngle = (double)GetRot(dx, dy, 6280) / 1000;
+			NPower = playerDistance / Size + 1;
+			player[i]->Force(sin(playerAngle) * Power / NPower,
+					cos(playerAngle) * Power / NPower);
+			player[i]->Damage((int) (Damage / NPower));
 		}
+	}
 
 }
 void Screen::Explosion(double x, double y, int Damage, int Size, int Power) {
-	DrawCircleToMap (x, y, (double)(7 + 8 * Size) / 2., mAir);
+	//	DrawCircleToMap (x, y, (double)(7 + 8 * Size) / 2., mAir);
+	DrawCircleToMap(x,y, 7+Size,mAir);
 	auto nExp = new Exp();
 	nExp->Init (x,y, Size);
 	AddObject(nExp);
@@ -618,7 +724,9 @@ void Screen::DrawPlPic(int PicNum, double x, double y, long RotateNum) {
 
 void Screen::DrawOnePlPic(int playerNum,
 		int PicNum, double x, double y, int RotateNum) {
-	ImageFunctions::DrawPicture(PicNum, x , y, RotateNum);
+	if (CurrentlyRendering == playerNum){
+		ImageFunctions::DrawPicture(PicNum, x , y, RotateNum);
+	}
 
 }
 
@@ -677,7 +785,7 @@ void Screen::DrawPlCircle(double x, double y,
 }
 
 Screen::ControlStruct Screen::GetControll(int num) {
-		return control[num];
+	return control[num];
 }
 
 void Screen::SetStatus(long player, long Index, double Value) {
@@ -695,7 +803,7 @@ void Screen::MakePlayers(int myNumber) {
 		if (GetMap(X, Y) == mAir) break;
 	}
 
-	int vehicleNum = Rnd() * 2;
+	int vehicleNum = Rnd() * 3;
 	Player *p;
 	switch (vehicleNum) {
 	case 0:
@@ -704,6 +812,9 @@ void Screen::MakePlayers(int myNumber) {
 	case 1:
 		p = new Eagle();
 		break;
+	case 2:
+		p = new Reference();
+		break;
 	default:
 		p = new Guy();
 		break;
@@ -711,7 +822,7 @@ void Screen::MakePlayers(int myNumber) {
 
 	p->Init(X, Y, 0,0, myNumber);
 	AddObject(p);
-	if (myNumber == 1 || myNumber == 2){
+	if (myNumber == 0 || myNumber == 1){
 		SetPlayer(myNumber, p);
 	}
 }
