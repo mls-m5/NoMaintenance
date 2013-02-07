@@ -182,6 +182,7 @@ void Eagle::Init(double X, double Y, double XSpeed2, double YSpeed2, int Number)
 	XSpeed = XSpeed2;
 	YSpeed = YSpeed2;
 	CWheelY = 0;
+	WheelY = 5;
 	Width = 22 / 2;
 	Height = 12 / 2;
 	Dying = false;

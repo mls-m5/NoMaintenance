@@ -105,7 +105,6 @@ void Hao::TimeTab(){
 	if (Dying && (int)(Rnd() * 50) == 1) { Terminate();}
 
 	if (MyNumber < 2) {
-		FrmScreen.SetScreenPos ((MyNumber), (XPos) + XAim * TurnIT, (YPos) + Aim);
 		auto c = FrmScreen.GetControll((MyNumber));
 		for(i = 0; i <= 10; ++i){
 			if (FrmScreen.GetMap((XPos), YPos + i * 2)) {
@@ -133,6 +132,7 @@ void Hao::TimeTab(){
 		if (c.MoveDirection) { TurnIT = c.MoveDirection;}
 		XSpeed = XSpeed + c.MoveDirection * 1 / 1.1;
 		Weapons.GetCurrentWeapon()->Fire ((XPos), (YPos), XAim, Aim, (TurnIT), c.Fire);
+		FrmScreen.SetScreenPos ((MyNumber), (XPos) + XAim * TurnIT, (YPos) + Aim);
 	}else{
 		if (Items[0] < 20 && (int)(Rnd() * 100) == 1) { Die();}
 		i = FrmScreen.isPlayer(XPos, YPos, 30, 30);
@@ -160,6 +160,12 @@ void Hao::TimeTab(){
 void Hao::Render(){
 	FrmScreen.DrawOnePlPic (MyNumber, ddCrossHair, XPos + XAim * (double)TurnIT - 7.5, YPos + Aim - 7.5, 1);
 	FrmScreen.DrawPlPic(ddEagle, XPos - 15, YPos - 12, 0.5 + (double)TurnIT / 2 + 2);
+
+	if (MyNumber == 0 || MyNumber == 2){
+		if (FrmScreen.GetControll(MyNumber).Change){
+			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
+		}
+	}
 }
 
 void Hao::Init(double X, double Y, double XSpeed2, double YSpeed2, int Number){
@@ -171,7 +177,12 @@ void Hao::Init(double X, double Y, double XSpeed2, double YSpeed2, int Number){
 	XSpeed = XSpeed2;
 	YSpeed = YSpeed2;
 	Width = 22 / 2;
+	Dying = false;
 	Height = 12 / 2;
+	CAim = 0;
+	Aim = 0;
+	XAim = 50;
+	TurnIT = 1;
 	Items[0] = GamePlay.Armor;
 	ItemMax[0] = GamePlay.Armor;
 	FrmScreen.SetStatus((MyNumber), 0, 1);

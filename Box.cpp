@@ -7,6 +7,7 @@
 
 #include "Box.h"
 #include "aux.h"
+#include "FloatingText.h"
 
 Box::Box() {
 	ItemNumber = -1;
@@ -50,6 +51,9 @@ void Box::TimeTab(){
 		}
 		PlaySound(dsReload);
 		FrmScreen.RemoveObject(this);
+		auto fText = new FloatingText;
+		fText->Init(XPos, YPos - 10, 0, -1, Item, 50, i-1, .1);
+		frmScreen.AddObject(fText);
 	}
 	if (TimeLimit < 0 ){
 		FrmScreen.RemoveObject(this);
@@ -60,4 +64,7 @@ void Box::TimeTab(){
 
 void Box::Render(){
 	FrmScreen.DrawPlPic(ddItem, XPos - 5, YPos - 5, BoxType);
+	if (GamePlay.ShowContent){
+		FrmScreen.DrawText(XPos, YPos - 10, Item);
+	}
 }

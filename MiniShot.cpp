@@ -37,7 +37,7 @@ void MiniShot::TimeTab() {
 	}
 	if (FrmScreen.isPlayer((XPos), (YPos)) != 0) {
 		FrmScreen.RemoveObject(this);
-		FrmScreen.CustomExplosion(XPos, YPos, 20, 4, 10);
+		FrmScreen.CustomExplosion(XPos, YPos, 5, 10, 10);
 	}
 }
 

@@ -39,8 +39,7 @@ class ImageFunctions {
 
 public:
 	static SDL_Surface *createSurface(SDL_Surface *surf, int w, int h, bool transparent);
-	ImageFunctions();
-	virtual ~ImageFunctions();
+
 	static Image ForePicture[];
 	static int subWidth[];
 	static int subHeight[];
@@ -70,6 +69,7 @@ public:
 	static void InitImageFunctions(SDL_Surface* surface) ;
 	static void UnloadImageFunctions();
 
+	static void DrawText(double x, double y, std::string text);
 
 	static void drawAirCircleToMap(int x, int y, int r) ;
 
@@ -77,7 +77,8 @@ public:
 	static void SetViewport(int x1, int y1, int w, int h);
 
 	static void DrawCircleToMap(double X, double Y, double r, Color color) ;
-	static void DrawCircle(double X, double Y, double r, Color c, double Alpha = 1.);
+	static void DrawCircle(double X, double Y, double r, Color c);
+	static void DrawPie(double X, double Y, double r, Color c, double a1 = 0, double a2 = 360);
 
 };
 

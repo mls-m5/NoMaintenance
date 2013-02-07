@@ -163,6 +163,13 @@ void Airokurtz::Render(){
 	FrmScreen.DrawOnePlPic( MyNumber, ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 0);
 
 	frmScreen.DrawPlPic(ddAirokurtz, XPos - 15, YPos - 12, 0.5 + (double)TurnIT / 2);
+
+
+	if (MyNumber == 0 || MyNumber == 2){
+		if (FrmScreen.GetControll(MyNumber).Change){
+			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
+		}
+	}
 }
 
 void Airokurtz::Init(double X, double Y, double XSpeed2, double YSpeed2, int Number){

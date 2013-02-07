@@ -41,7 +41,7 @@ public:
 
 	virtual void PickUp(std::string Item){} ;
 
-	virtual void UpDateItems(){} ;
+	virtual void UpDateItems();
 
 	double getXPos() {return XPos;};
 

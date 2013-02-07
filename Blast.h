@@ -11,6 +11,8 @@
 #include "Solid.h"
 
 class Blast: public Solid {
+	double xspeed, yspeed, xpos, ypos;
+	long charge;
 public:
 	Blast();
 	virtual ~Blast();

@@ -18,7 +18,6 @@ class Airokurtz: public Player {
 	WeaponCollection Weapons;
 	bool Dying;
 public:
-	int MyNumber;
 	Airokurtz();
 	~Airokurtz();
 

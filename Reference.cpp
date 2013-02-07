@@ -180,7 +180,7 @@ void Reference::TimeTab(){
 					SmokeTrace = 1;
 					CalcItem(2, -9);
 				}
-			}else{
+			}else if (!c.Change){
 				Aim = Aim + c.AimDirection * 2;
 				if (Aim > 30) { Aim = 30;}
 				if (Aim < -50) { Aim = -50;}
@@ -224,6 +224,12 @@ void Reference::Render(){
 	FrmScreen.DrawPlPic(ddChassi, XPos - 11, YPos - 22, 4.5 + (double)TurnIT / 2.);
 	FrmScreen.DrawPlPic(ddWheel, XPos - 11, YPos + CWheelY[0] - 12, (WheelRotate));
 	FrmScreen.DrawPlPic(ddWheel, XPos + 5, YPos + CWheelY[1] - 12, (WheelRotate));
+
+	if (MyNumber == 0 || MyNumber == 2){
+		if (FrmScreen.GetControll(MyNumber).Change){
+			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
+		}
+	}
 }
 
 void Reference::Init(double X, double Y, double XSpeed2, double YSpeed2, int Number){

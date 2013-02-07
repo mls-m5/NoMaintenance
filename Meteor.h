@@ -17,7 +17,7 @@ public:
 
 	void Init(double X, double Y, double Xs, double Ys);
 	void TimeTab();
-
+	void Render();
 
 	virtual ~Meteor();
 	double XPos,  YPos,  XSpeed,  YSpeed;

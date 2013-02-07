@@ -19,7 +19,6 @@ class Eagle: public Player {
 	Canoner Weapon1; CarlGustaf Weapon2;
 	bool Dying;
 public:
-	int MyNumber;
 	Eagle();
 	virtual ~Eagle();
 

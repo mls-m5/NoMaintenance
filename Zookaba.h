@@ -1,24 +1,21 @@
 /*
  * Zookaba.h
  *
- *  Created on: 30 jan 2013
+ *  Created on: 7 feb 2013
  *      Author: mattias
  */
 
 #ifndef ZOOKABA_H_
 #define ZOOKABA_H_
 
-#include "Solid.h"
+#include "Weapon.h"
 
-class Zookaba: public Solid {
-	double XPos; double YPos; double XSpeed; double YSpeed;
+class Zookaba: public Weapon {
+	int Delay;
 public:
 	Zookaba();
 	virtual ~Zookaba();
-
-	void Init(double X, double Y, double Xs, double Ys);
-	void TimeTab();
-	void Render();
+	void Fire(double X, double Y, double XAim, double YAim, int Turn, bool isFire);
 };
 
 #endif /* ZOOKABA_H_ */

@@ -8,6 +8,7 @@
 #ifndef WEAPON_H_
 #define WEAPON_H_
 #include "Player.h"
+#include <string>
 
 class Weapon {
 public:
@@ -18,6 +19,7 @@ public:
 	virtual void setPlayer(Player *p){MyPlayer = p;} ;
 
 	Player *MyPlayer;
+	std::string name;
 };
 
 #endif /* WEAPON_H_ */

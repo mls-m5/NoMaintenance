@@ -27,13 +27,13 @@ private:
 	int PLAYERNUMBER;
 	std::vector<std::vector<unsigned char>>Map;
 	int MapWidth, MapHeight;
-	unsigned int ignoreColor;
+	Color ignoreColor;
 	std::list<Solid*> Objekt;
 	std::list<Solid*> removeList;
 	Position PlScreen[2];
 	Position CScreen[2];
 	Player * player[2];
-	double Status[2][8];
+	double Status[2][9];
 	long QuakeScreen;
 	long DropBoxLeft;
 
@@ -117,7 +117,7 @@ public:
 	void HugeExplosion(double xpos, double ypos,  double Damage, double Power) ;
 	void CustomExplosion(double x, double y, long Damage,
 			int Size, long Power) ;
-	void Explosion(double x, double y, int Damage, int Size, int Power) ;
+	void Explosion(double x, double y, int Size, int Damage, int Power) ;
 
 
 
@@ -128,7 +128,6 @@ public:
 	Player *getPlayer(int l) ;
 	void HitPlayer(int i, int Damage) ;
 	void AddObject(Solid *o) ;
-	void CreatePlayer(int num);
 
 	int GetMap(double X, double Y) ;
 
@@ -143,10 +142,13 @@ public:
 	int GetMapHeight() {return MapHeight;}
 
 	void DrawPlLine(double xPos, double yPos,
-			double x2, double y2, double width, Color c);
+			double x2, double y2, double width, Color c, bool rounded = false);
 
 	void DrawPlCircle(double x, double y,
 			double size, Color c);
+
+	void DrawText(double x, double y, std::string text);
+	void DrawOneText(double x, double y, std::string text, int num = -1);
 
 	ControlStruct GetControll(int num) ;
 
@@ -166,6 +168,8 @@ public:
 			double ninjaPosY) ;
 
 	void SetPlayer(int Index, Player * p) ;
+
+	void SetWeaponBar(int Index, double Value);
 };
 
 #endif /* SCREEN_H_ */

@@ -33,6 +33,7 @@ void Plasma::TimeTab(){
     YPos = YPos + YSpeed;
     if (FrmScreen.GetMapLine(XPos, YPos, XSpeed, YSpeed) || FrmScreen.isPlayer(XPos, YPos, 5, 5)) {
         FrmScreen.Explosion(XPos, YPos, 1, 20, 20);
+//        FrmScreen.Explosion(XPos, YPos, 3, 20, 20);
         FrmScreen.RemoveObject(this);
         PlaySound(dsExplosion);
         FrmScreen.MakeQuake(10);

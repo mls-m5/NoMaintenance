@@ -28,6 +28,7 @@
 #include "Airokurtz.h"
 #include "Hao.h"
 #include "Box.h"
+#include "Phykoser.h"
 
 Screen frmScreen;
 
@@ -57,7 +58,6 @@ void Screen::Start(){
 
 	while (gameRunning)
 	{
-
 		DropBoxLeft = DropBoxLeft - 1;
 		if (DropBoxLeft < 1) {
 			DropBox();
@@ -214,9 +214,10 @@ void Screen::InitFrmScreen() {
 	PLAYERNUMBER = 2;
 
 	GamePlay.Ammo = 100;
-	GamePlay.Armor = 50;
+	GamePlay.Armor = 100;
 	GamePlay.Blood = 100;
 	GamePlay.Veihles = 10;
+	GamePlay.ShowContent = true;
 
 
 	for (int i = 0; i < 5; ++i){
@@ -256,7 +257,7 @@ void Screen::InitFrmScreen() {
 	//	AddObject(b3);
 	//
 	//	auto m = new Musquash();
-	auto e = new Hao();
+	auto e = new Eagle();
 	e->Init(30, 30, 0, 0,  1);
 	AddObject(e);
 	SetPlayer(1, e);
@@ -303,7 +304,7 @@ void Screen::LoadLevel(string filename) {
 	for (int i = 0; i <= mDirt; ++i){
 		MapEl[i] = ImageFunctions::getBufferPixel(bufferedImage, i, 0);
 	}
-	ignoreColor = MapEl[0];
+	ignoreColor = Color(MapEl[0], bufferedImage->format);
 
 	unsigned int pixel;
 	for (int x=0; x<MapWidth; ++x)
@@ -372,7 +373,6 @@ void Screen::Render() {
 
 
 		DrawPlPic(ddRLevel, 0,0, 0);
-		DrawPlCircle(0,0,20,Color(1,1,1));
 
 		//Ritar display
 		glMatrixMode(GL_PROJECTION);
@@ -385,14 +385,15 @@ void Screen::Render() {
 
 
 		for (int j = 0; j < 8; ++j){
-			auto tx = -.8 + (double) j / 8. ;
-			//			ImageFunctions::DrawLineToDisplay(tx,1./ 4. -1.,tx,-1.,.02, Color(0,0,0));
+			auto tx = -.8 + (double) j / 16. ;
+			ImageFunctions::DrawLineToDisplay(tx,1./ 4. -1.,tx,-1.,.03, Color(0,0,0));
 			ImageFunctions::DrawLineToDisplay(tx,Status[i][j] / 4. -1.,tx,-1.,.01, Color(1,1,1));
 		}
+
+		ImageFunctions::DrawCircle(0,-.90,.11,Color(.1,.1,.1, .5 * Status[i][8]));
+		ImageFunctions::DrawPie(0,-.90,.1,Color(1,1,1), 0, 360 * Status[i][8]);
+		Status[i][8] /= 1.5;
 	}
-
-
-
 
 	ImageFunctions::UpdateScreen();
 
@@ -611,9 +612,9 @@ void Screen::CustomExplosion(double x, double y, long Damage,
 	}
 
 }
-void Screen::Explosion(double x, double y, int Damage, int Size, int Power) {
-	//	DrawCircleToMap (x, y, (double)(7 + 8 * Size) / 2., mAir);
-	DrawCircleToMap(x,y, 7+Size,mAir);
+void Screen::Explosion(double x, double y, int Size, int Damage, int Power) {
+		DrawCircleToMap (x, y, (double)(7 + 8 * Size), mAir);
+//	DrawCircleToMap(x,y, 7+Size,mAir);
 	auto nExp = new Exp();
 	nExp->Init (x,y, Size);
 	AddObject(nExp);
@@ -658,11 +659,6 @@ void Screen::DrawCircleToMap(double X, double Y, int r, int color) {
 		for (int cx = cxstart; cx <= cxstop; ++cx){
 			if (Map[cx][ (int) (cy + Y)] == mDirt) { Map[ cx][(int) (cy + Y)] = color;}
 		}
-		//		if (X - cr < 0) { cxstart = (int) -X; }else{ cxstart = -cr;}
-		//		if (X + cr >= MapWidth) { tx = (int) (MapWidth - X); }else{ tx = cr;}
-		//		for(int cx = cxstart; cx <= tx; ++cx){
-		//			if (Map[(int) (cx + X)][ (int) (cy + Y)] == mDirt) { Map[(int) (cx + X)][(int) (cy + Y)] = Color;}
-		//		}
 	}
 
 	Color c;
@@ -766,17 +762,12 @@ void Screen::setControlStateFromKey(int e, int state) {
 }
 
 void Screen::DrawPlLine(double X1, double Y1,
-		double X2, double Y2, double Width, Color c) {
+		double X2, double Y2, double Width, Color c, bool rounded) {
+	if (rounded){
+		ImageFunctions::DrawCircle(X1, Y1, Width / 2., c);
+		ImageFunctions::DrawCircle(X2, Y2, Width / 2., c);
+	}
 	ImageFunctions::DrawLineToDisplay(X1, Y1, X2, Y2, Width , c);
-
-	//	ImageFunctions::DrawLineToDisplay (X1 -CScreen[0].X + SCREENPLWIDTH,
-	//			Y1 -CScreen[0].Y + SCREENPLHEIGHT, X2 -CScreen[0].X + SCREENPLWIDTH,
-	//			Y2 -CScreen[0].Y + SCREENPLHEIGHT, Width, c, 0);
-	//	ImageFunctions::DrawLineToDisplay( X1 -CScreen[1].X + SCREENPLWIDTH,
-	//			Y1 -CScreen[1].Y + SCREENPLHEIGHT, X2 -CScreen[1].X + SCREENPLWIDTH,
-	//			Y2 -CScreen[1].Y + SCREENPLHEIGHT, Width, c, 1);
-
-
 }
 
 void Screen::DrawPlCircle(double x, double y,
@@ -803,7 +794,7 @@ void Screen::MakePlayers(int myNumber) {
 		if (GetMap(X, Y) == mAir) break;
 	}
 
-	int vehicleNum = Rnd() * 3;
+	int vehicleNum = Rnd() * 6;
 	Player *p;
 	switch (vehicleNum) {
 	case 0:
@@ -814,6 +805,15 @@ void Screen::MakePlayers(int myNumber) {
 		break;
 	case 2:
 		p = new Reference();
+		break;
+	case 3:
+		p = new Hao();
+		break;
+	case 4:
+		p = new Airokurtz();
+		break;
+	case 5:
+		p = new Phykoser();
 		break;
 	default:
 		p = new Guy();
@@ -837,9 +837,27 @@ bool Screen::isThisPlayer(int target, double ninjaPosX,
 }
 
 
+void Screen::DrawText(double x, double y, std::string text) {
+	ImageFunctions::DrawText(x,y,text);
+}
+
+
+void Screen::DrawOneText(double x, double y, std::string text, int num) {
+	if (num == CurrentlyRendering){
+		ImageFunctions::DrawText(x,y,text);
+	}
+}
+
 void Screen::SetPlayer(int Index, Player* p) {
 	if (Index > PLAYERNUMBER -1) return;
 	player[Index] = p;
 
 }
+
+void Screen::SetWeaponBar(int Index, double Value) {
+	if (Index == 0 || Index == 1){
+		Status[Index][8] = Value;
+	}
+}
+
 

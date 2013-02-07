@@ -10,7 +10,6 @@
 #include "aux.h"
 
 ChokladZingo::ChokladZingo() {
-	// TODO Auto-generated constructor stub
 
 }
 

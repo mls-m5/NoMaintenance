@@ -24,7 +24,6 @@ void Meteor::Init(double X, double Y, double Xs, double Ys) {
 
 void Meteor::TimeTab() {
 	frmScreen.MakeSmoke (XPos, YPos, Rnd() * 2 - 1, Rnd() * 2 - 1, 1);
-	frmScreen.DrawPlPic(ddbExp, XPos - 15, YPos - 15, 0);
 	XPos = XPos + XSpeed;
 	YPos = YPos + YSpeed;
 	if (frmScreen.GetMapLine(XPos, YPos, XSpeed, YSpeed)){
@@ -34,6 +33,10 @@ void Meteor::TimeTab() {
 		PlaySound (dsExplosion);
 	}
 
+}
+
+void Meteor::Render() {
+	frmScreen.DrawPlPic(ddbExp, XPos - 15, YPos - 15, 0);
 }
 
 Meteor::~Meteor() {

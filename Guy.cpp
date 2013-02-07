@@ -119,7 +119,7 @@ void Guy::TimeTab(){
 		}
 		if (c.Jump && OnGround) { YSpeed = -10;}
 		;
-		frmScreen.SetStatus((MyNumber), 0, Items[0] / ItemMax[0]);
+		frmScreen.SetStatus((MyNumber), 0, Items[0] , ItemMax[0]);
 	}
 	else{
 		WheelY = 5;
@@ -136,6 +136,13 @@ void Guy::Render(){
 
 	FrmScreen.DrawOnePlPic (MyNumber, ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 2);
 	FrmScreen.DrawPlPic(ddGuy, XPos - 5, YPos - 7.5, 4.5 + TurnIT * (GuyStep + 1.5) + 10 * PictureNumber);
+
+
+	if (MyNumber == 0 || MyNumber == 2){
+		if (FrmScreen.GetControll(MyNumber).Change){
+			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
+		}
+	}
 }
 
 void Guy::Init(double X, double Y,  double XSpeed2,  double YSpeed2, int Number){
@@ -155,7 +162,7 @@ void Guy::Init(double X, double Y,  double XSpeed2,  double YSpeed2, int Number)
 	FrmScreen.SetPlayer(MyNumber, this);
 	for(i = 1; i <= 7; ++i){
 		Items[i] = 2 * GamePlay.Ammo;
-		ItemMax[i] = 2 * GamePlay.Ammo;
+		ItemMax[i] = 4 * GamePlay.Ammo;
 	}
 	XAim = 50;
 	UpDateItems();
@@ -236,6 +243,6 @@ void Guy::PickUp(std::string Item){
 void Guy::UpDateItems(){
 	long i;
 	for(i = 0; i <= 7; ++i){
-		FrmScreen.SetStatus(MyNumber, i, Items[i] / ItemMax[i]);
+		FrmScreen.SetStatus(MyNumber, i, Items[i] , ItemMax[i]);
 	}
 }

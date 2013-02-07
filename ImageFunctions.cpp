@@ -5,7 +5,6 @@
  *      Author: mattias
  */
 
-#define GL_GLEXT_PROTOTYPES
 //#define GL_GLEXT_PROTOTYPES
 
 #include <GL/glew.h>
@@ -18,7 +17,7 @@ using namespace std;
 #include <iosfwd>
 #include <GL/gl.h>
 #include <math.h>
-
+#include <FTGL/ftgl.h>
 
 /* SDL interprets each pixel as a 32-bit number, so our masks must depend
    on the endianness (byte order) of the machine */
@@ -43,15 +42,9 @@ int ImageFunctions::imagesPerRow[ddLast];
 GLuint ImageFunctions::levelPicFBO;
 
 SDL_Surface * BackSurface;
-ImageFunctions::ImageFunctions() {
-	// TODO Auto-generated constructor stub
-
-}
-
-ImageFunctions::~ImageFunctions() {
-	// TODO Auto-generated destructor stub
-}
-
+FTGLPixmapFont* MainFont;
+static int ViewportHeight;
+static int ViewportWidth;
 
 void ImageFunctions::LoadBufferedImageToArray(int num, string res){
 	auto bi2 = loadImage(res.c_str());
@@ -71,56 +64,36 @@ void ImageFunctions::LoadBufferedImageToArray(int num, string res){
 
 }
 
-
-//void ImageFunctions::setStandardDimensions(int num, SDL_Surface *bi2) {
-//	subWidth[num] = bi2->w;
-//	subHeight[num] = bi2->h;
-//	imagesPerRow[num] = 1;
-//}
-
 SDL_Surface *ImageFunctions::createSurface(SDL_Surface*surf, int w, int h, bool transparent){
 
 	auto surface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32,
-	                               rmask, gmask, bmask, amask);
+			rmask, gmask, bmask, amask);
 
 	SDL_Rect source;
 	source.x = source.y = 0;
 	source.w = surf->w;
 	source.h = surf->h;
-
-//	SDL_Rect dest; //Detta stämmer ej.. src = dest...
-//	dest.x = dest.y = 0;
-//	dest.w = w;
-//	dest.h = h;
-
 	auto dest = source;
 	if (surf)
 		SDL_BlitSurface(surf, &source, surface, &dest);
-
-
-//	source.x = source.y = 0;
-//	source.w = surf->w;
-//	source.w = surf->h;
-//	SDL_FillRect(surface, &source, 0x00FFFF00);
-
 	return surface;
 }
 
 inline int
 pow2roundup (int x)
 {
-    if (x < 0)
-        return 0;
-    --x;
-    x |= x >> 1;
-    x |= x >> 2;
-    x |= x >> 4;
-    x |= x >> 8;
-    x |= x >> 16;
-    return x+1;
+	if (x < 0)
+		return 0;
+	--x;
+	x |= x >> 1;
+	x |= x >> 2;
+	x |= x >> 4;
+	x |= x >> 8;
+	x |= x >> 16;
+	return x+1;
 }
 
-	Image ImageFunctions::ConvertToImage(SDL_Surface* bi) {
+Image ImageFunctions::ConvertToImage(SDL_Surface* bi) {
 
 
 	//Öker storleken så att gl blir glad
@@ -132,7 +105,7 @@ pow2roundup (int x)
 	//////////////////////////////////////7
 	GLuint texture;
 	// This is a handle to our texture object
-//	SDL_Surface* surface = surface; // This surface will tell us the details of the image
+	//	SDL_Surface* surface = surface; // This surface will tell us the details of the image
 	GLenum texture_format;
 	GLint nOfColors;
 	if ((surface)) {
@@ -150,13 +123,13 @@ pow2roundup (int x)
 		// get the number of channels in the SDL surface
 		nOfColors = surface->format->BytesPerPixel;
 		if (nOfColors == 4) // contains an alpha channel
-				{
+		{
 			if (surface->format->Rmask == 0x000000ff)
 				texture_format = GL_RGBA;
 			else
 				texture_format = GL_BGRA;
 		} else if (nOfColors == 3) // no alpha channel
-				{
+		{
 			if (surface->format->Rmask == 0x000000ff)
 				texture_format = GL_RGB;
 			else
@@ -235,22 +208,15 @@ void ImageFunctions::DrawPicture(int picNum, double x, double y,
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//	glTexParameteri( GL_TEXTURE_2D,
-//	                 GL_TEXTURE_WRAP_T,
-//	                 GL_REPEAT );
+	//	glTexParameteri( GL_TEXTURE_2D,
+	//	                 GL_TEXTURE_WRAP_T,
+	//	                 GL_REPEAT );
 	if (imagesPerRow[picNum] != 0){
 		double w = (double)subWidth[picNum] / ForePicture[picNum].actualSize;
 		double h = (double)subHeight[picNum] / ForePicture[picNum].actualSize;
 		double sourceX = w * (double)(rotateNum % imagesPerRow[picNum]);
-//		double sourceX = (double)stempx / (double)ForePicture[picNum].actualSize;
 
 		double sourceY = h * (double)(rotateNum / imagesPerRow[picNum]);
-//		double sourceY = (double) stempy / (double)ForePicture[picNum].actualSize;
-
-//		SDL_Rect dest = {(unsigned short)x, (unsigned short)y,(unsigned short) (x+w), (unsigned short)(y+h)};
-//		SDL_Rect source = {(unsigned short)sourceX, (unsigned short)sourceY, (unsigned short)(w), (unsigned short)(h)};
-//		SDL_BlitSurface(ForePicture[picNum], &source, BackSurface, &dest);
-
 
 		double x1 = x;
 		double x2 = x + subWidth[picNum];
@@ -286,29 +252,21 @@ void ImageFunctions::DrawPicture(int picNum, double x, double y,
 		glTexCoord2d(0 + 0, 0 + h);
 		glVertex2d(x1, y2);
 		glEnd();
-//		int w = subWidth[picNum];
-//		int h = subHeight[picNum];
-//		SDL_Rect dest = {(unsigned short)x, (unsigned short)y,(unsigned short) (x+w), (unsigned short)(y+h)};
-//		SDL_Rect source = {(unsigned short)0, (unsigned short)0, (unsigned short)(0 + w), (unsigned short)(0 + h)};
-//	    SDL_BlitSurface(ForePicture[picNum], &source, BackSurface, &dest);
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void ImageFunctions::SetLevelPic(SDL_Surface* level, SDL_Surface* rlevel){
-//	ForePicture[ddLevel] = level;
-
 	ForePicture[ddLevel] = ConvertToImage(level);
 	ForePicture[ddRLevel] = ConvertToImage(rlevel);
 	SetLevelFBO(ForePicture[ddLevel].num);
-
-//	ForePicture[ddLevel] = ConvertToImage(rlevel);
-
 }
 
 void ImageFunctions::InitImageFunctions(SDL_Surface *surface){
 
 	glewInit();
+	MainFont = new FTGLPixmapFont("Ubuntu-R.ttf");
+	MainFont->FaceSize(10);
 
 	BackSurface = surface;
 
@@ -338,15 +296,15 @@ void ImageFunctions::InitImageFunctions(SDL_Surface *surface){
 	LoadBufferedImageToArray(ddWheel2, "wheel");  //Dessa fungerar ej av någon anlednin. Det verkar vara något med numren
 	LoadBufferedImageToArray(ddCrossHair2, "CrossHair");
 	LoadBufferedImageToArray(ddbExp2, "bExp");
-//	LoadBufferedImageToArray(ddCrossHair, "chassi");
+	//	LoadBufferedImageToArray(ddCrossHair, "chassi");
 }
 
 
 void ImageFunctions::drawAirCircleToMap(int x, int y, int r) {
-//	Graphics2D g = ForePicture[ddLevel].createGraphics();
-//	g.setColor(new Color(ForePicture[ddLevel].getRGB(0, 0), true));
-//	g.fillOval(x - r, y - r, r * 2, r * 2);
-//	g.dispose();
+	//	Graphics2D g = ForePicture[ddLevel].createGraphics();
+	//	g.setColor(new Color(ForePicture[ddLevel].getRGB(0, 0), true));
+	//	g.fillOval(x - r, y - r, r * 2, r * 2);
+	//	g.dispose();
 }
 
 unsigned int ImageFunctions::RGBToColor(int r, int g, int b, int a) {
@@ -368,7 +326,6 @@ void ImageFunctions::DrawLineToDisplay(double x1, double y1, double x2,
 
 	glColor3d(c.r, c.g, c.b);
 
-//	glDisable(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBegin(GL_QUADS);
@@ -377,7 +334,6 @@ void ImageFunctions::DrawLineToDisplay(double x1, double y1, double x2,
 	glVertex2d(x2 + dy, y2 - dx);
 	glVertex2d(x2 - dy, y2 + dx);
 	glEnd();
-//	glEnable(GL_TEXTURE_2D);
 
 
 }
@@ -386,104 +342,32 @@ void ImageFunctions::DrawLineToDisplay(double x1, double y1, double x2,
 
 
 void ImageFunctions::SetLevelFBO(GLuint texture) {
-	// create a renderbuffer object to store depth info
-
-	//TODO: Se till att skriva om den här funktionen
-//	GLuint textureId;
-//	glGenTextures(1, &textureId);
-//	glBindTexture(GL_TEXTURE_2D, textureId);
-//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-//	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE); // automatic mipmap
-//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, ForePicture[ddLast].w, ForePicture[ddLast].h, 0,
-//	             GL_RGBA, GL_UNSIGNED_BYTE, 0);
-//	glBindTexture(GL_TEXTURE_2D, 0);
-//
-//	GLuint rboId;
-//	glGenRenderbuffers(1, &rboId);
-//	glBindRenderbuffer(GL_RENDERBUFFER, rboId);
-//	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT,
-//	                      ForePicture[ddLevel].w, ForePicture[ddLevel].h);
-//	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-//
-//	// create a framebuffer object
-//	GLuint fboId;
-//	glGenFramebuffers(1, &fboId);
-//	glBindFramebuffer(GL_FRAMEBUFFER, fboId);
-//
-//	// attach the texture to FBO color attachment point
-//	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-//	                       GL_TEXTURE_2D, textureId, 0);
-//
-//	// attach the renderbuffer to depth attachment point
-//	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-//	                          GL_RENDERBUFFER, rboId);
-//
-//	GLboolean fboUsed = false;
-//	// check FBO status
-//	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-//	if(status != GL_FRAMEBUFFER_COMPLETE)
-//	    fboUsed = false;
-//
-//	// switch back to window-system-provided framebuffer
-//	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//
-//		if (!fboUsed){
-//			cout << "Kunde inte ladda frame buffer-objekt. Kan inte ta bort data från kartans textur, felkod: " << status << endl;
-//		}
-//
-//	return ;
-	//Det verkar som att man bara behöver en render buffer om man vill använda djup...
-//	GLuint RB;
-//	glGenRenderbuffers(1, &RB);
-//	glBindRenderbuffer(GL_RENDERBUFFER, RB);
-//	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT,
-//	                      ForePicture[ddLevel].w, ForePicture[ddLevel].h);
-//	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-	// create a framebuffer object
-	GLboolean fboUsed = false;
-
 	glGenFramebuffers(1, &levelPicFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, levelPicFBO);
 
 	// attach the texture to FBO color attachment point
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-	                       GL_TEXTURE_2D, ForePicture[ddLevel].num, 0);
+			GL_TEXTURE_2D, ForePicture[ddLevel].num, 0);
 
 
 	glBindTexture(GL_TEXTURE_2D, ForePicture[ddLevel].num);
 
-	//De två första raderna är viktiga för att få det hela att fungera
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//for some reason these two lines were nessesary to make it all work
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE); // automatic mipmap
+	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE); // generate automatic mipmap
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	// attach the renderbuffer to depth attachment point
-//	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-//	                          GL_RENDERBUFFER, RB);
-//	 check FBO status
-	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-	if(status != GL_FRAMEBUFFER_COMPLETE)
-	    fboUsed = false;
 
-	if (!fboUsed){
-		cout << "Kunde inte ladda frame buffer-objekt. Kan inte ta bort data från kartans textur, felkod: " << status << endl;
-	}
-
-
-	// switch back to window-system-provided framebuffer
+	// back to the standard framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
 }
 
 void ImageFunctions::UpdateScreen() {
-//	SDL_Flip(BackSurface);
+	//	SDL_Flip(BackSurface);
 	SDL_GL_SwapBuffers();
 	glClearColor(0,0.1,1,0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -493,10 +377,14 @@ void ImageFunctions::UnloadImageFunctions() {
 	for (int i=0; i < ddLast; ++i){
 		glDeleteTextures(1, &ForePicture[i].num);
 	}
+
 }
 
 void ImageFunctions::SetViewport(int x1, int y1, int w, int h) {
 	glViewport(x1,y1,w,h);
+
+	ViewportWidth = w;
+	ViewportHeight = h;
 }
 
 void ImageFunctions::DrawCircleToMap(double X, double Y, double r, Color color) {
@@ -512,23 +400,10 @@ void ImageFunctions::DrawCircleToMap(double X, double Y, double r, Color color) 
 	glTranslated(-1,-1,0);
 	glScaled(1. / (double)textureSize * 2., 1. / (double)textureSize * 2., 1.);
 
-//	glBegin(GL_LINES);
-//
-//	glColor3d(1,1,1);
-//	glVertex2d(0,0);
-//	glVertex2d(X,Y);
-//	glEnd();
-
-
 	glDisable(GL_BLEND);
-	glColor4d(0,color.r, color.g, color.b);
-	glBegin(GL_TRIANGLE_FAN);
-	for (int i= 0; i < 360; ++i){
-		glVertex2f(X + r * sin((double)i / 180. * PI),Y + r * cos((double)i / 180. * PI));
-	}
-	glEnd();
-
-	DrawCircle(X,Y,r, color, 0);
+	Color tc(color);
+	tc.a = 0;
+	DrawCircle(X,Y,r, color);
 
 
 	glPopMatrix();
@@ -546,34 +421,92 @@ void ImageFunctions::DrawCircleToMap(double X, double Y, double r, Color color) 
 	glMatrixMode(GL_MODELVIEW);
 }
 
-Color::Color(double nr, double ng, double nb) {
-//	control for overflow
+Color::Color(double nr, double ng, double nb, double na) {
+	//	control for overflow
 	auto max1 = [] (double x) {return (x > 1.)? 1. : x;};
 	r = max1(nr);
 	g = max1(ng);
 	b = max1(nb);
+	a = max1(na);
 
-	color = SDL_MapRGB(BackSurface->format, (unsigned char) r * 255, (unsigned char) g * 255, (unsigned char) b * 255);
+	color = SDL_MapRGBA(BackSurface->format,
+			(unsigned char) (r * 255), (unsigned char) (g * 255), (unsigned char) (b * 255), (unsigned char)(a* 255));
 }
 
-Color::Color(unsigned int c) {
-	Uint8 tr, tg, tb;
-	SDL_GetRGB(c, BackSurface->format, &tr,&tg,&tb);
+Color::Color(unsigned int c, SDL_PixelFormat *f) {
+	Uint8 tr, tg, tb, ta;
+
+	auto format = f;
+	if (!f) format = BackSurface->format;
+	SDL_GetRGBA(c, format, &tr,&tg,&tb, &ta);
 	r = (double) tr / 255.;
 	g = (double) tg / 255.;
 	b = (double) tb / 255.;
+	a = (double) ta / 255.;
 }
 
-void ImageFunctions::DrawCircle(double X, double Y, double r, Color c, double Alpha) {
+void ImageFunctions::DrawText(double x, double y, std::string text) {
+	auto bbox = MainFont->BBox(text.c_str());
+	auto x1 = bbox.Lower().Xf();
+	auto x2 = bbox.Upper().Xf();
+	auto y1 = bbox.Lower().Yf();
+	auto y2 = bbox.Upper().Yf();
+	glRasterPos2d(x - (x1 + x2) / 4,y - (y1 - y2) / 4.);
+	MainFont->Render(text.c_str(), text.length());
+}
+
+void ImageFunctions::DrawCircle(double X, double Y, double r, Color c) {
+
+	static GLuint dList = 0;
+
+	glPushMatrix();
+	glTranslated(X,Y,0);
+	glScaled(r,r,r);
+	glColor4d(c.r, c.g, c.b, c.a);
+	if (dList == 0){
+		dList = glGenLists(1);
+		glNewList(dList, GL_COMPILE_AND_EXECUTE);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glBegin(GL_TRIANGLE_FAN);
+		for (int i= 0; i < 360; ++i){
+			glVertex2f(sin((double)i / 180. * PI),cos((double)i / 180. * PI));
+		}
+		glEnd();
+		glEndList();
+	}
+	else{
+		glCallList(dList);
+	}
+
+	glPopMatrix();
+}
+
+
+void ImageFunctions::DrawPie(double X, double Y, double r, Color c, double a1, double a2) {
+	glPushMatrix();
+	glTranslated(X,Y,0);
+	glScaled(r,r,r);
+	glColor4d(c.r, c.g, c.b, c.a);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glColor4d(Alpha,c.r, c.g, c.b);
+
+	int froma, toa;
+	if (a2 > a1){
+		froma = a1;
+		toa = a2;
+	}
+	else{
+		froma = a2;
+		toa = a1;
+	}
+
 	glBegin(GL_TRIANGLE_FAN);
-	for (int i= 0; i < 360; ++i){
-		glVertex2f(X + r * sin((double)i / 180. * PI),Y + r * cos((double)i / 180. * PI));
+	glVertex2d(0,0);
+	for (int i= froma; i < toa; ++i){
+		glVertex2f(sin((double)i / 180. * PI),cos((double)i / 180. * PI));
 	}
 	glEnd();
+
+	glPopMatrix();
 }
-
-
 
 

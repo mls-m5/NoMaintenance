@@ -1,3 +1,4 @@
+#include <SDL/SDL.h>
 /*
  * aux.h
  *
@@ -122,8 +123,9 @@ const int dsLaser = 14;
 const int dsLaunch = 15;
 const int dsOusch = 16;
 const int dsDie =  17;
+const int dsExplosion2 = 18;
 
-const int dslast = 18; //'Håller reda på räkningen
+const int dslast = 19; //'Håller reda på räkningen
 
 
 const int mAir = 0; //Luft
@@ -135,11 +137,11 @@ const int mDirt = 4; //Jord
 class Color{
 public:
 	unsigned int color;
-	double r, g, b;
+	double r, g, b, a;
 
 	Color(): color(0), r(0), g(0), b(0){};
-	Color(double r, double g, double b);
-	Color(unsigned int c);
+	Color(double r, double g, double b, double a = 1.);
+	Color(unsigned int c, SDL_PixelFormat* f = 0);
 };
 
 #include "Screen.h"
@@ -191,6 +193,7 @@ struct GameplayStruct{
     long Veihles;
     long StartV;
     long SoldierType[1];
+    bool ShowContent;
 
 };
 

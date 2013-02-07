@@ -142,12 +142,14 @@ void Musquash::TimeTab(){
 			}
 		}
 		if (NinjaOut) { DoNinjarope();}
-		CAim = CAim + (double)c.AimDirection / 10;
-		if (c.AimDirection != 0) {
-			if (CAim > 0.7) { CAim = 0.7;}
-			if (CAim < -1.8) { CAim = -1.8;}
-			XAim = cos(CAim) * 50;
-			Aim = sin(CAim) * 50;
+		if (!c.Change){
+			CAim = CAim + (double)c.AimDirection / 10;
+			if (c.AimDirection != 0) {
+				if (CAim > 0.7) { CAim = 0.7;}
+				if (CAim < -1.8) { CAim = -1.8;}
+				XAim = cos(CAim) * 50;
+				Aim = sin(CAim) * 50;
+			}
 		}
 		if (CrossVar == true) { CrossVar = false; }else{ CrossVar = true;}
 		FrmScreen.SetScreenPos ((MyNumber), (XPos) + (XAim + 20) * TurnIT, (YPos) + Aim * 2);
@@ -160,7 +162,7 @@ void Musquash::TimeTab(){
 				Weapons.SetWeapon( 0);
 			}
 		}
-		FrmScreen.SetStatus((MyNumber), 0, Items[0] / ItemMax[0]);
+		FrmScreen.SetStatus((MyNumber), 0, Items[0] , ItemMax[0]);
 		if (MyNumber == 1) { Target = 0; }else{ Target = 1;}
 	}else{
 		if (Items[0] < 20) { Damage (1);}
@@ -272,10 +274,6 @@ void Musquash::Die(){
 	FrmScreen.KilledPlayer( MyNumber);
 }
 
-long Musquash::getItem(int Index){
-	return Items[Index];
-}
-
 void Musquash::DropGuy(){
 	auto guy = new Guy();
 	guy->Init(XPos, YPos, XSpeed, YSpeed, MyNumber);
@@ -288,90 +286,83 @@ void Musquash::PickUp(std::string Item){
 	Weapons.AddWeapon(Item);
 }
 
-void Musquash::UpDateItems(){
-	int i;
-	for(i = 0; i <= 7; ++i){
-		FrmScreen.SetStatus(MyNumber, i, Items[i] / ItemMax[i]);
-	}
-}
 
-void Musquash::DoNinjarope(){		long Total; double ToX; double ToY; int i;
-ToX = NinjaPosX - XPos;
-ToY = NinjaPosY - YPos - 5;
-Total = (long) sqrt(ToX * ToX + ToY * ToY);
-;
-switch (NinjaMode){
-case inAir:
-	nXS = nXS - ToX / 200 / NinjaLength;
-	nYS = nYS - ToY / 200 / NinjaLength + 0.3;
-	if (NinjaPic != 0) {
-		NinjaPic = 0;
-	}
-	else{
-		NinjaPic = 1;
-	}
-	break;
-case inDirt:
-	nXS = 0;
-	nYS = 0;
-	XSpeed = XSpeed + ToX / 10000 * Total / NinjaLength;
-	YSpeed = YSpeed + ToY / 10000 * Total / NinjaLength;
-	if (ToX > 200) { FrmScreen.DrawCircleToMap(NinjaPosY, NinjaPosY, 5, mAir);}
-	if (ToY > 200) { FrmScreen.DrawCircleToMap(NinjaPosX, NinjaPosX, 5, mAir);}
-	break;
-case inRock:
-	nXS = 0;
-	nYS = 0;
-	XSpeed = XSpeed + ToX / 10000 * Total / NinjaLength;
-	YSpeed = YSpeed + ToY / 10000 * Total / NinjaLength;
-	break;
-case inEnemy:
-	nXS = 0;
-	nYS = 0;
+void Musquash::DoNinjarope(){
+	long Total; double ToX; double ToY; int i;
+	ToX = NinjaPosX - XPos;
+	ToY = NinjaPosY - YPos - 5;
+	Total = (long) sqrt(ToX * ToX + ToY * ToY);
 	;
-	TheEnemy->Force(- ToX / 15000 * Total / NinjaLength,- ToY / 15000 * Total / NinjaLength);
-	XSpeed = XSpeed + ToX / 10000 * Total / NinjaLength;
-	YSpeed = YSpeed + ToY / 10000 * Total / NinjaLength;
-	NinjaPosX = TheEnemy->getXPos();
-	NinjaPosY = TheEnemy->getYPos();
-	break;
-}
-;
-if (MyNumber < 2) {
-	if (NinjaMode != inEnemy) {
-		if (FrmScreen.isThisPlayer(Target, NinjaPosX, NinjaPosY)) { NinjaMode = inEnemy;}
-		if (NinjaMode == inEnemy) { TheEnemy = FrmScreen.getPlayer(Target);}
+	switch (NinjaMode){
+	case inAir:
+		nXS = nXS - ToX / 400 / NinjaLength;
+		nYS = nYS - ToY / 400 / NinjaLength + 0.3;
+		if (NinjaPic != 0) {
+			NinjaPic = 0;
+		}
+		else{
+			NinjaPic = 1;
+		}
+		break;
+	case inDirt:
+		nXS = 0;
+		nYS = 0;
+		XSpeed = XSpeed + ToX / 10000 * Total / NinjaLength;
+		YSpeed = YSpeed + ToY / 10000 * Total / NinjaLength;
+		if (ToX > 200) { FrmScreen.DrawCircleToMap(NinjaPosY, NinjaPosY, 5, mAir);}
+		if (ToY > 200) { FrmScreen.DrawCircleToMap(NinjaPosX, NinjaPosX, 5, mAir);}
+		break;
+	case inRock:
+		nXS = 0;
+		nYS = 0;
+		XSpeed = XSpeed + ToX / 10000 * Total / NinjaLength;
+		YSpeed = YSpeed + ToY / 10000 * Total / NinjaLength;
+		break;
+	case inEnemy:
+		nXS = 0;
+		nYS = 0;
+		;
+		TheEnemy->Force(- ToX / 15000 * Total / NinjaLength,- ToY / 15000 * Total / NinjaLength);
+		XSpeed = XSpeed + ToX / 10000 * Total / NinjaLength;
+		YSpeed = YSpeed + ToY / 10000 * Total / NinjaLength;
+		NinjaPosX = TheEnemy->getXPos();
+		NinjaPosY = TheEnemy->getYPos();
+		break;
 	}
-}else{
-	if (NinjaMode != inEnemy) {
-		for(i = 0; i <= 1; ++i){
-			if (FrmScreen.isThisPlayer(i, NinjaPosX, NinjaPosY)) { NinjaMode = inEnemy;}
-			if (NinjaMode == inEnemy) {  TheEnemy = FrmScreen.getPlayer(i);}
+	;
+	if (MyNumber < 2) {
+		if (NinjaMode != inEnemy) {
+			if (FrmScreen.isThisPlayer(Target, NinjaPosX, NinjaPosY)) { NinjaMode = inEnemy;}
+			if (NinjaMode == inEnemy) { TheEnemy = FrmScreen.getPlayer(Target);}
+		}
+	}else{
+		if (NinjaMode != inEnemy) {
+			for(i = 0; i <= 1; ++i){
+				if (FrmScreen.isThisPlayer(i, NinjaPosX, NinjaPosY)) { NinjaMode = inEnemy;}
+				if (NinjaMode == inEnemy) {  TheEnemy = FrmScreen.getPlayer(i);}
+			}
 		}
 	}
-}
-if (NinjaMode != inEnemy) {
-	switch (FrmScreen.GetMapLine(NinjaPosX, NinjaPosY, nXS, nYS)){
-	case mDirt: NinjaMode = inDirt;
-	break;
-	case mRock: NinjaMode = inRock;
-	break;
-	default: NinjaMode = inAir;
-	break;
+	if (NinjaMode != inEnemy) {
+		switch (FrmScreen.GetMapLine(NinjaPosX, NinjaPosY, nXS, nYS)){
+		case mDirt: NinjaMode = inDirt;
+		break;
+		case mRock: NinjaMode = inRock;
+		break;
+		default: NinjaMode = inAir;
+		break;
+		}
 	}
-}
-;
-;
-NinjaPosX = NinjaPosX + nXS;
-NinjaPosY = NinjaPosY + nYS;
-;
+
+
+	NinjaPosX = NinjaPosX + nXS;
+	NinjaPosY = NinjaPosY + nYS;
+
 }
 
 
 void Musquash::Render(){
-
-	FrmScreen.DrawPlPic (ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 3);
-//	FrmScreen.DrawOnePlPic (ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 3);
+	FrmScreen.DrawOnePlPic (ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 3);
 
 	FrmScreen.DrawPlLine (XPos, YPos - 7, XPos + XAim / 4 * TurnIT, YPos + Aim / 4 - 7, 6, Color(.5,.5,.5));
 
@@ -404,5 +395,11 @@ void Musquash::Render(){
 	}
 	else{
 		FrmScreen.DrawPlPic(ddChassi, XPos - 14, YPos - 22, 2 + TurnIT);
+	}
+
+	if (MyNumber == 0 || MyNumber == 2){
+		if (FrmScreen.GetControll(MyNumber).Change){
+			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
+		}
 	}
 }

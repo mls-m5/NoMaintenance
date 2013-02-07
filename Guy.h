@@ -58,7 +58,7 @@ public:
 
 	void UpDateItems();
 
-	int MyNumber; long PictureNumber;
+	long PictureNumber;
 	long Items[8], ItemMax[8];
 	long WheelY;
 	long GuyStep; bool OnGround; int TurnIT; long Aim; long XAim;

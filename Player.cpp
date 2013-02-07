@@ -25,3 +25,9 @@ void Player::CalcItem(int Index, long Val) {
 }
 
 
+void Player::UpDateItems(){
+	int i;
+	for(i = 0; i <= 7; ++i){
+		FrmScreen.SetStatus(MyNumber, i, Items[i] , ItemMax[i]);
+	}
+}

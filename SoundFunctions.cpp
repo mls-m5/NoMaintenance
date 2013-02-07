@@ -33,6 +33,7 @@ void SoundFunctions::InitSoundFunctions() {
 	sound[dsFire9] = new Sound("fire9.wav");
 	sound[dsShotgun] = new Sound("shotgun.wav") ;
 	sound[dsExplosion] = new Sound("exp.wav");
+	sound[dsExplosion2] = new Sound("exp2.wav");
 	sound[dsReload] = new Sound("reload.wav");
 	sound[dsReload2] = new Sound("reload2.wav");
 	sound[dsOpen] = new Sound("open.wav");
@@ -42,7 +43,6 @@ void SoundFunctions::InitSoundFunctions() {
 	sound[dsDie] = new Sound("die.wav");
 
 
-    extern void mixaudio(void *unused, Uint8 *stream, int len);
     SDL_AudioSpec fmt;
 
     /* Set 16-bit stereo audio at 22Khz */

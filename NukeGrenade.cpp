@@ -27,6 +27,7 @@ void NukeGrenade::Init(double X, double Y, double Xs, double Ys){
 	YSpeed = Ys;
 	HLeft = (long) (40 + Rnd() * 10);
 	Rotation = 3;
+	NextSmoke = 0;
 }
 
 void NukeGrenade::TimeTab(){

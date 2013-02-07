@@ -20,10 +20,6 @@ class Musquash: public Player {
 	static const int inEnemy = 3;
 
 public:
-//
-//	int MyNumber;
-//	double XSpeed; double YSpeed; double XPos; double YPos;
-//	int Width; int Height;
 
 	int CWheelY[2]; int WheelY;
 	double WheelRotate;
@@ -52,13 +48,9 @@ public:
 
 	void Die();
 
-	long getItem(int Index);
-
 	void DropGuy();
 
 	void PickUp(std::string Item);
-
-	void UpDateItems();
 
 	void DoNinjarope();
 
