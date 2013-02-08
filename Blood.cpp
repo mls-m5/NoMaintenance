@@ -6,7 +6,7 @@
  */
 
 #include "Blood.h"
-#include "aux.h"
+#include "common.h"
 
 Blood::Blood() {
 	// TODO Auto-generated constructor stub

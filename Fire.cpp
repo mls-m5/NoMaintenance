@@ -6,7 +6,7 @@
  */
 
 #include "Fire.h"
-#include "aux.h"
+#include "common.h"
 
 Fire::Fire() {
 	// TODO Auto-generated constructor stub

@@ -6,7 +6,7 @@
  */
 
 #include "EldFunkarProj.h"
-#include "aux.h"
+#include "common.h"
 #include <math.h>
 #include "Spark.h"
 

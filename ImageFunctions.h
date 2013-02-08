@@ -10,7 +10,7 @@
 #include <SDL/SDL.h>
 #include <string>
 #include <GL/gl.h>
-#include "aux.h"
+#include "common.h"
 
 class Image{
 public:

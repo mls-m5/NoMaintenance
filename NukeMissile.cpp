@@ -6,7 +6,7 @@
  */
 
 #include "NukeMissile.h"
-#include "aux.h"
+#include "common.h"
 #include "IBomb.h"
 
 NukeMissile::NukeMissile() {

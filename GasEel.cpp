@@ -6,7 +6,7 @@
  */
 
 #include "GasEel.h"
-#include "aux.h"
+#include "common.h"
 #include "FireBomb.h"
 static const long MaxAmmo = 20;
 

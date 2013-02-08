@@ -6,7 +6,7 @@
  */
 
 #include "Exp.h"
-#include "aux.h"
+#include "common.h"
 
 Exp::Exp() {
 	// TODO Auto-generated constructor stub

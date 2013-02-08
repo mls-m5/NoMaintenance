@@ -6,7 +6,7 @@
  */
 
 #include "Phykoser.h"
-#include "aux.h"
+#include "common.h"
 #include "Guy.h"
 #include "IBomb.h"
 #include "Spark.h"

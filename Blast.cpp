@@ -6,7 +6,7 @@
  */
 
 #include "Blast.h"
-#include "aux.h"
+#include "common.h"
 
 Blast::Blast() {
 	// TODO Auto-generated constructor stub

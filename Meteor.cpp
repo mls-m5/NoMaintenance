@@ -6,7 +6,7 @@
  */
 
 #include "Meteor.h"
-#include "aux.h"
+#include "common.h"
 #include "Screen.h"
 
 

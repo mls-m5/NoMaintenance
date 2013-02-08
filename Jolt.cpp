@@ -6,7 +6,7 @@
  */
 
 #include "Jolt.h"
-#include "aux.h"
+#include "common.h"
 #include "Plasma.h"
 
 Jolt::Jolt() {

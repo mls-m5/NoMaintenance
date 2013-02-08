@@ -8,7 +8,7 @@
 #include "Screen.h"
 #include <math.h>
 #include <SDL/SDL.h>
-#include "aux.h"
+#include "common.h"
 #include "ImageFunctions.h"
 #include "Smoke.h"
 #include "Exp.h"
@@ -170,7 +170,7 @@ void Screen::LoadControls() {
 		control[i].Change =0;
 		control[i].Fire = 0;
 	}
-
+#if 0
 	cmap[0].Left = SDLK_e;
 	cmap[0].Right = SDLK_i;
 	cmap[0].Up = SDLK_p;
@@ -179,15 +179,25 @@ void Screen::LoadControls() {
 	cmap[0].Fire = SDLK_h;
 	cmap[0].Reload = SDLK_t;
 	cmap[0].Change = SDLK_n;
+#else
+	cmap[0].Left = SDLK_a;
+	cmap[0].Right = SDLK_d;
+	cmap[0].Up = SDLK_w;
+	cmap[0].Down = SDLK_s;
+	cmap[0].Jump = SDLK_k;
+	cmap[0].Fire = SDLK_j;
+	cmap[0].Reload = SDLK_SPACE;
+	cmap[0].Change = SDLK_l;
+#endif
 
 
 	cmap[1].Left = SDLK_LEFT;
 	cmap[1].Right = SDLK_RIGHT;
 	cmap[1].Up = SDLK_UP;
 	cmap[1].Down = SDLK_DOWN;
-	cmap[1].Jump = SDLK_KP0;
+	cmap[1].Jump = SDLK_KP5;
 	cmap[1].Fire = SDLK_KP4;
-	cmap[1].Reload = SDLK_KP5;
+	cmap[1].Reload = SDLK_KP0;
 	cmap[1].Change = SDLK_KP6;
 }
 
@@ -257,6 +267,8 @@ void Screen::InitFrmScreen() {
 	//	AddObject(b3);
 	//
 	//	auto m = new Musquash();
+
+#if 0
 	auto e = new Eagle();
 	e->Init(30, 30, 0, 0,  1);
 	AddObject(e);
@@ -266,7 +278,11 @@ void Screen::InitFrmScreen() {
 	m->Init(40, 30, 0, 0, 0);
 	AddObject(m);
 	SetPlayer(0, m);
-
+#else
+	srand(SDL_GetTicks());
+	MakePlayers(0);
+	MakePlayers(1);
+#endif
 	for (int i = 0; i < 10; ++i){
 		MakePlayers(2);
 	}

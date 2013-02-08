@@ -6,7 +6,7 @@
  */
 
 #include "CExp.h"
-#include "aux.h"
+#include "common.h"
 
 CExp::CExp() {
 	// TODO Auto-generated constructor stub

@@ -6,7 +6,7 @@
  */
 
 #include "Klachnikow.h"
-#include "aux.h"
+#include "common.h"
 #include "Musquash.h"
 
 struct Position{

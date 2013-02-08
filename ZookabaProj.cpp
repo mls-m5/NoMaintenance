@@ -6,7 +6,7 @@
  */
 
 #include "ZookabaProj.h"
-#include "aux.h"
+#include "common.h"
 
 ZookabaProj::ZookabaProj() {
 	// TODO Auto-generated constructor stub

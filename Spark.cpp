@@ -6,7 +6,7 @@
  */
 
 #include "Spark.h"
-#include "aux.h"
+#include "common.h"
 #include "ImageFunctions.h"
 
 Spark::Spark() {

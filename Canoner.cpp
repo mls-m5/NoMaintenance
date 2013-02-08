@@ -6,7 +6,7 @@
  */
 
 #include "Canoner.h"
-#include "aux.h"
+#include "common.h"
 #include "Player.h"
 #include "Bomb.h"
 Canoner::~Canoner() {

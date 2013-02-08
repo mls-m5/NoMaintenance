@@ -6,7 +6,7 @@
  */
 
 #include "Guy.h"
-#include "aux.h"
+#include "common.h"
 #include <math.h>
 #include "WeaponCollection.h"
 #include "Blood.h"

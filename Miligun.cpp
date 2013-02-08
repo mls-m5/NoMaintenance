@@ -6,7 +6,7 @@
  */
 
 #include "Miligun.h"
-#include "aux.h"
+#include "common.h"
 #include "SoundFunctions.h"
 #include "MiniShot.h"
 

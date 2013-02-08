@@ -6,7 +6,7 @@
  */
 
 #include "HExp.h"
-#include "aux.h"
+#include "common.h"
 
 HExp::HExp() {
 	// TODO Auto-generated constructor stub

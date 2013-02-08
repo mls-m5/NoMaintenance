@@ -6,7 +6,7 @@
  */
 
 #include "Haubits.h"
-#include "aux.h"
+#include "common.h"
 #include "Spark.h"
 
 struct Position{

@@ -6,7 +6,7 @@
  */
 
 #include "FloatingText.h"
-#include "aux.h"
+#include "common.h"
 
 FloatingText::FloatingText() {
 	// TODO Auto-generated constructor stub

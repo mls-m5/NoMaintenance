@@ -6,7 +6,7 @@
  */
 
 #include "Hao.h"
-#include "aux.h"
+#include "common.h"
 #include "Spark.h"
 #include <math.h>
 #include "Guy.h"

@@ -6,7 +6,7 @@
  */
 
 #include "CarlGustaf.h"
-#include "aux.h"
+#include "common.h"
 #include "Missile.h"
 
 CarlGustaf::CarlGustaf() {

@@ -9,7 +9,7 @@
 
 #include <GL/glew.h>
 #include "ImageFunctions.h"
-#include "aux.h"
+#include "common.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -50,7 +50,7 @@ void ImageFunctions::LoadBufferedImageToArray(int num, string res){
 	auto bi2 = loadImage(res.c_str());
 	ForePicture[num] = bi2;
 
-	cout << res << endl;
+//	cout << res << endl;
 
 	string url = ("data/gfx/" + res);
 	ifstream file(url);

@@ -7,7 +7,7 @@
 
 #include "ChokladZingo.h"
 #include "NukeGrenade.h"
-#include "aux.h"
+#include "common.h"
 
 ChokladZingo::ChokladZingo() {
 

@@ -6,7 +6,7 @@
  */
 
 #include "MiniShot.h"
-#include "aux.h"
+#include "common.h"
 
 
 MiniShot::~MiniShot() {

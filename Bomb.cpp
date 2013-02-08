@@ -6,7 +6,7 @@
  */
 
 #include "Bomb.h"
-#include "aux.h"
+#include "common.h"
 #include "Spark.h"
 
 Bomb::Bomb() {

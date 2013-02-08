@@ -6,7 +6,7 @@
  */
 
 #include "Missile.h"
-#include "aux.h"
+#include "common.h"
 #include "Screen.h"
 
 Missile::Missile() {

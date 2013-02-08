@@ -6,7 +6,7 @@
  */
 
 #include "SmokeSpark.h"
-#include "aux.h"
+#include "common.h"
 
 SmokeSpark::SmokeSpark() {
 	// TODO Auto-generated constructor stub

@@ -6,7 +6,7 @@
  */
 
 #include "FireBomb.h"
-#include "aux.h"
+#include "common.h"
 #include "Fire.h"
 
 FireBomb::FireBomb() {

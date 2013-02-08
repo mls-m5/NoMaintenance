@@ -6,7 +6,7 @@
  */
 
 #include "Armageddon.h"
-#include "aux.h"
+#include "common.h"
 #include "Meteor.h"
 
 Armageddon::Armageddon() {

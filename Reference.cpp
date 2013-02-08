@@ -8,7 +8,7 @@
 #include "Reference.h"
 #include <string>
 #include "Guy.h"
-#include "aux.h"
+#include "common.h"
 #include <math.h>
 
 const int WheelY = 5;

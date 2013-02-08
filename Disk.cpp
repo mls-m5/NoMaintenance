@@ -6,7 +6,7 @@
  */
 
 #include "Disk.h"
-#include "aux.h"
+#include "common.h"
 
 Disk::Disk() {
 

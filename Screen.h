@@ -10,7 +10,7 @@
 #include <list>
 #include "Solid.h"
 #include "Player.h"
-#include "aux.h"
+#include "common.h"
 #include "ControlClass.h"
 #include <string>
 #include <vector>

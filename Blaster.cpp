@@ -7,7 +7,7 @@
 
 #include "Blaster.h"
 #include "Blast.h"
-#include "aux.h"
+#include "common.h"
 
 Blaster::Blaster() {
 	KeyDown = 0;

@@ -6,8 +6,7 @@
  */
 
 #include "Smoke.h"
-#include "aux.h"
-#include <GL/glew.h>
+#include "common.h"
 #include "ImageFunctions.h"
 
 Smoke::Smoke() {

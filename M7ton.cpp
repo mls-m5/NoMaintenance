@@ -6,7 +6,7 @@
  */
 
 #include "M7ton.h"
-#include "aux.h"
+#include "common.h"
 #include "Grenade.h"
 
 M7ton::M7ton() {

@@ -6,7 +6,7 @@
  */
 
 #include "Plasma.h"
-#include "aux.h"
+#include "common.h"
 
 Plasma::Plasma() {
 	// TODO Auto-generated constructor stub

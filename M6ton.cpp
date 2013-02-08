@@ -6,7 +6,7 @@
  */
 
 #include "M6ton.h"
-#include "aux.h"
+#include "common.h"
 #include "SolidLine.h"
 
 struct Position{

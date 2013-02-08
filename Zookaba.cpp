@@ -6,7 +6,7 @@
  */
 
 #include "Zookaba.h"
-#include "aux.h"
+#include "common.h"
 #include "ZookabaProj.h"
 
 Zookaba::Zookaba() {

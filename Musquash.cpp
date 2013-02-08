@@ -6,7 +6,7 @@
  */
 
 #include "Musquash.h"
-#include "aux.h"
+#include "common.h"
 #include "IBomb.h"
 #include "Guy.h"
 #include <math.h>

@@ -10,7 +10,12 @@
 #include "Screen.h"
 
 using namespace std;
+#ifdef __MINGW32__
+
+int main( int argc, char **argv ) {
+#else
 int main(void) {
+#endif
 	frmScreen.InitFrmScreen();
 	frmScreen.Start();
 	return 0;

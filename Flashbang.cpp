@@ -6,7 +6,7 @@
  */
 
 #include "Flashbang.h"
-#include "aux.h"
+#include "common.h"
 #include "SolidLine.h"
 struct Position{
 	double X, Y;

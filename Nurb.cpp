@@ -6,7 +6,7 @@
  */
 
 #include "Nurb.h"
-#include "aux.h"
+#include "common.h"
 #include "Fire.h"
 
 Nurb::Nurb() {

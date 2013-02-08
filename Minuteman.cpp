@@ -7,7 +7,7 @@
 
 #include "Minuteman.h"
 #include "NukeMissile.h"
-#include "aux.h"
+#include "common.h"
 
 Minuteman::Minuteman() {
 	// TODO Auto-generated constructor stub

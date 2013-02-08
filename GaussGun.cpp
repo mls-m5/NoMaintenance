@@ -6,7 +6,7 @@
  */
 
 #include "GaussGun.h"
-#include "aux.h"
+#include "common.h"
 
 struct Position{
 	double X, Y;

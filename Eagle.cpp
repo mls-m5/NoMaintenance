@@ -7,7 +7,7 @@
 
 #include "Eagle.h"
 #include "Guy.h"
-#include "aux.h"
+#include "common.h"
 #include "Spark.h"
 
 Eagle::Eagle() {

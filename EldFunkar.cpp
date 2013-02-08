@@ -6,7 +6,7 @@
  */
 
 #include "EldFunkar.h"
-#include "aux.h"
+#include "common.h"
 #include "EldFunkarProj.h"
 
 EldFunkar::EldFunkar() {

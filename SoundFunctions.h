@@ -13,7 +13,7 @@
 #include <string>
 #include <SDL/SDL.h>
 
-#include "aux.h"
+#include "common.h"
 
 class SoundFunctions {
 

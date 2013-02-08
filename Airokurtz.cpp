@@ -6,7 +6,7 @@
  */
 
 #include "Airokurtz.h"
-#include "aux.h"
+#include "common.h"
 #include "Guy.h"
 #include "Spark.h"
 #include <math.h>

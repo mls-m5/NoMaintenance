@@ -6,7 +6,7 @@
  */
 
 #include "Grenade.h"
-#include "aux.h"
+#include "common.h"
 
 Grenade::Grenade() {
 	// TODO Auto-generated constructor stub

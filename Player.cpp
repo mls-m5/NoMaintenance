@@ -6,7 +6,7 @@
  */
 
 #include "Player.h"
-#include "aux.h"
+#include "common.h"
 
 
 void Player::setItem(int Index, int Val) {

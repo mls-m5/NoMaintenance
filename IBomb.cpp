@@ -6,7 +6,7 @@
  */
 
 #include "IBomb.h"
-#include "aux.h"
+#include "common.h"
 
 IBomb::IBomb() {
 	// TODO Auto-generated constructor stub

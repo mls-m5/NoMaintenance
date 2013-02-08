@@ -7,7 +7,7 @@
 
 #include "SpastOLW.h"
 #include "MiniShot.h"
-#include "aux.h"
+#include "common.h"
 
 SpastOLW::SpastOLW() {
 

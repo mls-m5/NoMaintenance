@@ -6,7 +6,7 @@
  */
 
 #include "FloppyDisk.h"
-#include "aux.h"
+#include "common.h"
 #include "Disk.h"
 
 FloppyDisk::FloppyDisk() {

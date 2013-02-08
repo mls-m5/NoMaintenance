@@ -6,7 +6,7 @@
  */
 
 #include "Box.h"
-#include "aux.h"
+#include "common.h"
 #include "FloatingText.h"
 
 Box::Box() {
