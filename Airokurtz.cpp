@@ -165,7 +165,7 @@ void Airokurtz::Render(){
 	frmScreen.DrawPlPic(ddAirokurtz, XPos - 15, YPos - 12, 0.5 + (double)TurnIT / 2);
 
 
-	if (MyNumber == 0 || MyNumber == 2){
+	if (MyNumber == 0 || MyNumber == 1){
 		if (FrmScreen.GetControll(MyNumber).Change){
 			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
 		}

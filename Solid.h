@@ -13,6 +13,15 @@ public:
 
 	virtual void TimeTab(){};
 	virtual void Render(){};
+
+	void InitWorld() {
+	}
+
+	void Add(Solid* s) {
+	}
+
+	void standardInit() {
+	}
 };
 
 #define SOLID_H_

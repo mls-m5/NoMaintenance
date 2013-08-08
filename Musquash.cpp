@@ -362,7 +362,7 @@ void Musquash::DoNinjarope(){
 
 
 void Musquash::Render(){
-	FrmScreen.DrawOnePlPic (ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 3);
+	FrmScreen.DrawOnePlPic (MyNumber, ddCrossHair, XPos + XAim * TurnIT - 7.5, YPos + Aim - 7.5, 3);
 
 	FrmScreen.DrawPlLine (XPos, YPos - 7, XPos + XAim / 4 * TurnIT, YPos + Aim / 4 - 7, 6, Color(.5,.5,.5));
 
@@ -397,7 +397,7 @@ void Musquash::Render(){
 		FrmScreen.DrawPlPic(ddChassi, XPos - 14, YPos - 22, 2 + TurnIT);
 	}
 
-	if (MyNumber == 0 || MyNumber == 2){
+	if (MyNumber == 0 || MyNumber == 1){
 		if (FrmScreen.GetControll(MyNumber).Change){
 			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
 		}

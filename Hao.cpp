@@ -161,7 +161,7 @@ void Hao::Render(){
 	FrmScreen.DrawOnePlPic (MyNumber, ddCrossHair, XPos + XAim * (double)TurnIT - 7.5, YPos + Aim - 7.5, 1);
 	FrmScreen.DrawPlPic(ddEagle, XPos - 15, YPos - 12, 0.5 + (double)TurnIT / 2 + 2);
 
-	if (MyNumber == 0 || MyNumber == 2){
+	if (MyNumber == 0 || MyNumber == 1){
 		if (FrmScreen.GetControll(MyNumber).Change){
 			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
 		}

@@ -218,7 +218,7 @@ void Screen::InitFrmScreen() {
 	ImageFunctions::InitImageFunctions(screen);
 	SoundFunctions::InitSoundFunctions();
 
-	PlaySound(dsExplosion);
+//	PlaySound(dsExplosion);
 
 	LoadLevel("data/user/test");
 	PLAYERNUMBER = 2;

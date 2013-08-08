@@ -33,4 +33,5 @@ test: $(TEST)
 
 installer: all
 	date > Build.txt
-	zip -r NoMaintenance NoMaintenanceRemake.exe ./NoMaintenanceRemake data/* NMLogo.bmp Readme.txt Build.txt Ubuntu-R.ttf SDL.dll
+	zip -r NoMaintenance NoMaintenanceRemake.exe ./NoMaintenanceRemake data/* NMLogo.bmp Readme.txt Build.txt \
+	 Ubuntu-R.ttf SDL.dll freetype6.dll zlib1.dll

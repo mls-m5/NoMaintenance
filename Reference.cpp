@@ -225,7 +225,7 @@ void Reference::Render(){
 	FrmScreen.DrawPlPic(ddWheel, XPos - 11, YPos + CWheelY[0] - 12, (WheelRotate));
 	FrmScreen.DrawPlPic(ddWheel, XPos + 5, YPos + CWheelY[1] - 12, (WheelRotate));
 
-	if (MyNumber == 0 || MyNumber == 2){
+	if (MyNumber == 0 || MyNumber == 1){
 		if (FrmScreen.GetControll(MyNumber).Change){
 			frmScreen.DrawText(XPos, YPos - 20, Weapons.GetCurrentWeapon()->name);
 		}
