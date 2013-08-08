@@ -1,0 +1,5 @@
+
+
+Använder SDL och ftgl det är värt att notera
+inkluderar typsnitt från ubuntu också värt att notera
+
