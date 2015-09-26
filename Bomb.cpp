@@ -10,12 +10,9 @@
 #include "Spark.h"
 
 Bomb::Bomb() {
-	// TODO Auto-generated constructor stub
-
 }
 
 Bomb::~Bomb() {
-	// TODO Auto-generated destructor stub
 }
 
 

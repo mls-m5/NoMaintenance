@@ -38,7 +38,6 @@ Screen::Screen() {
 }
 
 Screen::~Screen() {
-	// TODO Auto-generated destructor stub
 }
 
 
@@ -218,8 +217,6 @@ void Screen::InitFrmScreen() {
 	ImageFunctions::InitImageFunctions(screen);
 	SoundFunctions::InitSoundFunctions();
 
-//	PlaySound(dsExplosion);
-
 	LoadLevel("data/user/test");
 	PLAYERNUMBER = 2;
 
@@ -234,39 +231,6 @@ void Screen::InitFrmScreen() {
 		DropBox();
 	}
 	DropBoxLeft = 0;
-
-	//
-	//	auto s = new Smoke();
-	//	s->Init(10, 10, 1, 1, 0);
-	//	AddObject(s);
-	//	MakeSmoke(10,10,0,1,0);
-	//	MakeSmoke(40,10,0,1,0);
-	//	MakeSmoke(70,10,0,1,0);
-
-
-	//	for (int i = 0; i < 20; ++i){
-	//		auto s2 = new Spark();
-	//		s2->Init( 5 + (double)i, - 10 , 2+(double)i, 0);
-	//		AddObject(s2);
-	//	}
-
-	//	s2 = new Spark();
-	//	s2.Init(10, 10, 5, 1);
-	//	AddObject(s2);
-	//
-	//	auto z = new Zookaba();
-	//	z->Init(10, 10, 1, 1);
-	//	AddObject(z);
-	////
-	//	auto b = new Bomb();
-	//	b->Init(10, 10, 15, 2);
-	//	AddObject(b);
-	//
-	//	auto b3 = new Blast();
-	//	b3->Init(30, 10, 3, 0, 30);
-	//	AddObject(b3);
-	//
-	//	auto m = new Musquash();
 
 #if 0
 	auto e = new Eagle();
