@@ -4,13 +4,31 @@
  *  Created on: 29 jan 2013
  *      Author: mattias
  */
-
-#ifndef IMAGEFUNCTIONS_H_
-#define IMAGEFUNCTIONS_H_
+#pragma once
 #include <SDL/SDL.h>
 #include <string>
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#include <windows.h>
+#endif
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#define GLEW_STATIC
+
+#include <GL/glew.h>
+
+#else
+
 #include <GL/gl.h>
+#endif
 #include "common.h"
+
+
+#ifdef PlaySound
+//Fixing WindowsMacros
+#undef PlaySound
+#undef DrawText
+#endif
 
 class Image{
 public:
@@ -81,5 +99,3 @@ public:
 	static void DrawPie(double X, double Y, double r, Color c, double a1 = 0, double a2 = 360);
 
 };
-
-#endif /* IMAGEFUNCTIONS_H_ */

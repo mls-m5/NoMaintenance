@@ -179,7 +179,7 @@ void Musquash::TimeTab(){
 	}
 	;
 	if (Items[0] < 40 && Rnd() * 40 > Items[0]) {
-		FrmScreen.MakeSmoke(XPos, YPos - 5, Rnd() - 0.5, -1.5d, 0);
+		FrmScreen.MakeSmoke(XPos, YPos - 5, Rnd() - 0.5, -1.5, 0);
 	}
 	CalcItem(1, 35);
 	CalcItem(2, 1);

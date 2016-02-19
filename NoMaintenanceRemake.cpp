@@ -8,14 +8,9 @@
 
 #include <iostream>
 #include "Screen.h"
-
-using namespace std;
-#ifdef __MINGW32__
+#include <SDL/SDL_main.h>
 
 int main( int argc, char **argv ) {
-#else
-int main(void) {
-#endif
 	frmScreen.InitFrmScreen();
 	frmScreen.Start();
 	return 0;

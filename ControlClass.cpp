@@ -7,7 +7,7 @@
 
 #include "ControlClass.h"
 
-namespace Solid {
+//namespace Solid {
 
 ControlClass::ControlClass() {
 	// TODO Auto-generated constructor stub
@@ -18,4 +18,4 @@ ControlClass::~ControlClass() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace Solid */
+//} /* namespace Solid */

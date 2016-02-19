@@ -17,7 +17,12 @@ using namespace std;
 #include <iosfwd>
 #include <GL/gl.h>
 #include <math.h>
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#define DISABLE_FONT
+#else
 #include <FTGL/ftgl.h>
+#endif
 
 /* SDL interprets each pixel as a 32-bit number, so our masks must depend
    on the endianness (byte order) of the machine */
@@ -42,7 +47,9 @@ int ImageFunctions::imagesPerRow[ddLast];
 GLuint ImageFunctions::levelPicFBO;
 
 SDL_Surface * BackSurface;
+#ifndef DISABLE_FONT
 FTGLPixmapFont* MainFont;
+#endif
 static int ViewportHeight;
 static int ViewportWidth;
 
@@ -265,8 +272,10 @@ void ImageFunctions::SetLevelPic(SDL_Surface* level, SDL_Surface* rlevel){
 void ImageFunctions::InitImageFunctions(SDL_Surface *surface){
 
 	glewInit();
+#ifndef DISABLE_FONT
 	MainFont = new FTGLPixmapFont("Ubuntu-R.ttf");
 	MainFont->FaceSize(10);
+#endif // !DISABLE_FONT
 
 	BackSurface = surface;
 
@@ -446,13 +455,15 @@ Color::Color(unsigned int c, SDL_PixelFormat *f) {
 }
 
 void ImageFunctions::DrawText(double x, double y, std::string text) {
+#ifndef DISABLE_FONT
 	auto bbox = MainFont->BBox(text.c_str());
 	auto x1 = bbox.Lower().Xf();
 	auto x2 = bbox.Upper().Xf();
 	auto y1 = bbox.Lower().Yf();
 	auto y2 = bbox.Upper().Yf();
-	glRasterPos2d(x - (x1 + x2) / 4,y - (y1 - y2) / 4.);
+	glRasterPos2d(x - (x1 + x2) / 4, y - (y1 - y2) / 4.);
 	MainFont->Render(text.c_str(), text.length());
+#endif // !DISABLE_FONT
 }
 
 void ImageFunctions::DrawCircle(double X, double Y, double r, Color c) {
